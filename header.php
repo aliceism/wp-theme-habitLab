@@ -12,10 +12,27 @@ if (! defined('ABSPATH')) {
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 <header class="site-header">
-    <div class="container">
-        <a class="site-brand" href="<?php echo esc_url(home_url('/')); ?>"><?php bloginfo('name'); ?></a>
+    <div class="container site-header__inner">
+        <a class="site-logo" href="<?php echo esc_url(home_url('/')); ?>" aria-label="<?php esc_attr_e('HabitLab home', 'habitlab'); ?>">
+            <span class="site-logo__base"><?php esc_html_e('HABIT', 'habitlab'); ?></span><span class="site-logo__accent"><?php esc_html_e('LAB', 'habitlab'); ?></span>
+        </a>
 
-        <nav class="site-nav" aria-label="<?php esc_attr_e('Primary menu', 'habitlab'); ?>">
+        <button
+            class="nav-toggle"
+            type="button"
+            data-nav-toggle
+            aria-controls="site-navigation"
+            aria-expanded="false"
+            aria-label="<?php esc_attr_e('Toggle menu', 'habitlab'); ?>"
+        >
+            <span class="nav-toggle__line"></span>
+            <span class="nav-toggle__line"></span>
+            <span class="nav-toggle__line"></span>
+        </button>
+
+        <div class="site-nav-overlay" data-nav-overlay></div>
+
+        <nav id="site-navigation" class="site-nav" aria-label="<?php esc_attr_e('Primary menu', 'habitlab'); ?>">
             <?php
             wp_nav_menu([
                 'theme_location' => 'primary',
