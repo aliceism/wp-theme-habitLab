@@ -387,6 +387,18 @@ body.nav-open .site-nav {
     box-shadow: 0 0 14px rgba(139, 92, 246, 0.2);
 }
 
+.btn-ghost {
+    border-color: rgba(148, 163, 184, 0.45);
+    background: rgba(15, 23, 42, 0.5);
+    color: var(--text-primary);
+}
+
+.btn-ghost:hover,
+.btn-ghost:focus-visible {
+    border-color: rgba(139, 92, 246, 0.6);
+    box-shadow: 0 0 14px rgba(139, 92, 246, 0.18);
+}
+
 .card {
     background: var(--surface-card);
     border: 1px solid rgba(148, 163, 184, 0.12);
@@ -406,17 +418,108 @@ body.nav-open .site-nav {
 }
 
 /* Pages: Front Page */
-.hero p {
-    max-width: 720px;
+.hero {
+    position: relative;
+    overflow: hidden;
+    padding: 9rem 0;
 }
 
-.hero .btn {
-    margin-right: 0.75rem;
-    margin-bottom: 0.75rem;
+.hero::before,
+.hero::after {
+    content: "";
+    position: absolute;
+    width: 32rem;
+    height: 32rem;
+    border-radius: 50%;
+    filter: blur(72px);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.hero::before {
+    top: -13rem;
+    right: -8rem;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.36) 0%, rgba(59, 130, 246, 0) 70%);
+}
+
+.hero::after {
+    left: -10rem;
+    bottom: -15rem;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, rgba(139, 92, 246, 0) 72%);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 820px;
+}
+
+.hero-title {
+    margin-bottom: 1rem;
+    font-size: clamp(3rem, 8vw, 5rem);
+}
+
+.gradient-text {
+    display: inline-block;
+    background: linear-gradient(120deg, var(--accent-blue), var(--accent-purple));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero-subtitle {
+    max-width: 700px;
+    margin-bottom: 2rem;
+    color: var(--text-secondary);
+    font-size: clamp(1rem, 2vw, 1.2rem);
+}
+
+.hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.hero-watermark {
+    position: absolute;
+    left: 50%;
+    bottom: 0.25rem;
+    transform: translateX(-50%);
+    z-index: 1;
+    font-family: Poppins, "Space Grotesk", system-ui, sans-serif;
+    font-size: clamp(4rem, 17vw, 13rem);
+    font-weight: 700;
+    line-height: 0.8;
+    letter-spacing: 0.1em;
+    color: var(--text-primary);
+    opacity: 0.03;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
 }
 
 .system-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1rem;
+}
+
+@media (max-width: 767px) {
+    .hero {
+        padding: 6.25rem 0;
+    }
+
+    .hero-title {
+        font-size: clamp(2.2rem, 12vw, 3.2rem);
+    }
+
+    .hero-subtitle {
+        margin-bottom: 1.5rem;
+        font-size: 1rem;
+    }
+
+    .hero-watermark {
+        font-size: clamp(3rem, 20vw, 6rem);
+        bottom: 0.5rem;
+    }
 }
