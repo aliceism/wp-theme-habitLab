@@ -26,6 +26,7 @@
     box-sizing: border-box;
 }
 
+/* Base */
 body {
     margin: 0;
     background-color: var(--bg-primary);
@@ -79,6 +80,7 @@ a:focus-visible {
     color: #73a7ff;
 }
 
+/* Layout */
 .container {
     width: min(var(--container-width), 92%);
     margin-inline: auto;
@@ -88,6 +90,21 @@ a:focus-visible {
     padding: 4rem 0;
 }
 
+.content-wrap {
+    padding-block: 3rem;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+}
+
+.content-reading .container {
+    width: min(800px, 92%);
+}
+
+/* Components */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -153,6 +170,7 @@ a:focus-visible {
     box-shadow: 0 8px 24px rgba(59, 130, 246, 0.18);
 }
 
+/* Pages: Front Page */
 .hero p {
     max-width: 720px;
 }

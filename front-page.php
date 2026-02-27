@@ -5,9 +5,9 @@ if (! defined('ABSPATH')) {
 
 get_header();
 ?>
-<?php get_template_part('template-parts/hero'); ?>
-<?php get_template_part('template-parts/section', 'philosophy'); ?>
-<?php get_template_part('template-parts/section', 'system'); ?>
-<?php get_template_part('template-parts/section', 'cta'); ?>
+<?php get_template_part('template-parts/front-page/hero'); ?>
+<?php get_template_part('template-parts/front-page/philosophy'); ?>
+<?php get_template_part('template-parts/front-page/system'); ?>
+<?php get_template_part('template-parts/front-page/cta'); ?>
 <?php
 get_footer();

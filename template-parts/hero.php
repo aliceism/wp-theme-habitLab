@@ -1,12 +1,1 @@
-<section class="section hero" aria-labelledby="hero-title">
-    <div class="container">
-        <header>
-            <h1 id="hero-title"><?php esc_html_e('You become what you repeat.', 'habitlab'); ?></h1>
-            <p><?php esc_html_e('Build systems. Not excuses. Momentum compounds.', 'habitlab'); ?></p>
-        </header>
-        <p>
-            <a class="btn btn-primary" href="<?php echo esc_url(wp_registration_url()); ?>"><?php esc_html_e('Join the Movement', 'habitlab'); ?></a>
-            <a class="btn btn-secondary" href="<?php echo esc_url(get_post_type_archive_link('post') ?: home_url('/blog/')); ?>"><?php esc_html_e('Read the Blog', 'habitlab'); ?></a>
-        </p>
-    </div>
-</section>
+<?php get_template_part('template-parts/front-page/hero'); ?>
