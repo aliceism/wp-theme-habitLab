@@ -152,3 +152,18 @@ a:focus-visible {
     border-color: rgba(59, 130, 246, 0.45);
     box-shadow: 0 8px 24px rgba(59, 130, 246, 0.18);
 }
+
+.hero p {
+    max-width: 720px;
+}
+
+.hero .btn {
+    margin-right: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.system-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+}
