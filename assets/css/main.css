@@ -1,0 +1,54 @@
+:root {
+    --bg-primary: #070b14;
+    --bg-secondary: #0f172a;
+    --surface-card: #111827;
+    --text-primary: #e5e7eb;
+    --text-secondary: #94a3b8;
+    --accent-blue: #3b82f6;
+    --accent-purple: #8b5cf6;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Inter, system-ui, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.container {
+    width: min(1120px, 92%);
+    margin: 0 auto;
+}
+
+.site-header,
+.site-footer {
+    padding: 1rem 0;
+    background: var(--bg-secondary);
+}
+
+.site-nav,
+.menu {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.site-main {
+    padding: 2.5rem 0;
+}
+
+a {
+    color: var(--accent-blue);
+}
+
+.card {
+    background: var(--surface-card);
+    border-radius: 12px;
+    padding: 1rem;
+}
