@@ -42,9 +42,9 @@ $habitlab_system_items = [
         'aside_title' => esc_html__('3 Starter Habits', 'habitlab'),
         'aside_intro' => '',
         'aside_items' => [
-            esc_html__('10 minutes of focused work', 'habitlab'),
-            esc_html__('1 intentional reflection', 'habitlab'),
-            esc_html__('1 physical reset (walk, stretch, breathwork)', 'habitlab'),
+            esc_html__('7-8 hours of sleep', 'habitlab'),
+            esc_html__('10 minutes of reading', 'habitlab'),
+            esc_html__('30 minutes of exercise)', 'habitlab'),
         ],
         'cta' => esc_html__('Action builds momentum.', 'habitlab'),
     ],

@@ -121,6 +121,7 @@ function initSystemModal(body) {
     var activeDialog = null;
     var activeTrigger = null;
     var closeTimer = null;
+    var hoverSuppressionTimer = null;
 
     if (!modals.length || !openTriggers.length) {
         return;
@@ -141,6 +142,23 @@ function initSystemModal(body) {
     function hideModalImmediately(modal) {
         modal.classList.remove('is-open');
         modal.hidden = true;
+    }
+
+    function clearHoverSuppression() {
+        if (hoverSuppressionTimer) {
+            window.clearTimeout(hoverSuppressionTimer);
+            hoverSuppressionTimer = null;
+        }
+
+        body.classList.remove('suppress-system-card-hover');
+    }
+
+    function suppressHoverState() {
+        clearHoverSuppression();
+        body.classList.add('suppress-system-card-hover');
+
+        window.addEventListener('pointermove', clearHoverSuppression, { once: true });
+        hoverSuppressionTimer = window.setTimeout(clearHoverSuppression, 1200);
     }
 
     function openModal(modal, trigger) {
@@ -174,6 +192,7 @@ function initSystemModal(body) {
     }
 
     function closeModal() {
+        var activeElement;
         var modalToClose;
         var triggerToRestore;
 
@@ -181,8 +200,13 @@ function initSystemModal(body) {
             return;
         }
 
+        activeElement = document.activeElement;
         modalToClose = activeModal;
         triggerToRestore = activeTrigger;
+
+        if (activeElement instanceof HTMLElement && modalToClose.contains(activeElement)) {
+            activeElement.blur();
+        }
 
         modalToClose.classList.remove('is-open');
         body.classList.remove('modal-open');
@@ -192,8 +216,10 @@ function initSystemModal(body) {
 
         if (triggerToRestore) {
             triggerToRestore.setAttribute('aria-expanded', 'false');
-            triggerToRestore.focus();
+            triggerToRestore.blur();
         }
+
+        suppressHoverState();
 
         closeTimer = window.setTimeout(function () {
             modalToClose.hidden = true;

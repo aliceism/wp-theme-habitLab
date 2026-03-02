@@ -751,6 +751,12 @@ body.nav-open .site-nav {
     box-shadow: 0 8px 28px rgba(var(--system-accent-rgb), 0.2);
 }
 
+body.suppress-system-card-hover .system-card.card--hover:hover {
+    transform: none;
+    border-color: rgba(148, 163, 184, 0.12);
+    box-shadow: none;
+}
+
 .system-card--knowledge h3,
 .system-card--practice h3,
 .system-card--proof h3 {
@@ -779,8 +785,8 @@ body.nav-open .site-nav {
 
 .system-card--proof,
 .system-modal--proof {
-    --system-accent-rgb: 236, 72, 153;
-    --system-accent-secondary-rgb: 217, 70, 239;
+    --system-accent-rgb: 209, 79, 150;
+    --system-accent-secondary-rgb: 236, 112, 184;
     --system-accent-tertiary-rgb: 251, 191, 36;
     --system-surface-main-rgb: 24, 10, 31;
     --system-surface-secondary-rgb: 40, 14, 52;
