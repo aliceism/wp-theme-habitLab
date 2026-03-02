@@ -1,4 +1,4 @@
-<section class="section section-system" aria-labelledby="system-title">
+<section id="system" class="section section-system" aria-labelledby="system-title">
     <div class="container">
         <header>
             <h2 id="system-title"><?php esc_html_e('The HabitLab System', 'habitlab'); ?></h2>

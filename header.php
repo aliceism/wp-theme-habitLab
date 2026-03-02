@@ -7,8 +7,8 @@ $habitlab_current_path = untrailingslashit(wp_parse_url(home_url(add_query_arg([
 $habitlab_user = wp_get_current_user();
 $habitlab_is_logged_in = is_user_logged_in();
 $habitlab_profile_url = $habitlab_is_logged_in ? get_edit_user_link() : '';
-$habitlab_explore_url = function_exists('habitlab_get_blog_url') ? habitlab_get_blog_url() : home_url('/');
-$habitlab_explore_path = untrailingslashit(wp_parse_url($habitlab_explore_url, PHP_URL_PATH) ?: '/');
+$habitlab_is_front_page = is_front_page();
+$habitlab_explore_url = $habitlab_is_front_page ? '#system' : home_url('/#system');
 
 if (! is_string($habitlab_profile_url) || $habitlab_profile_url === '') {
     $habitlab_profile_url = home_url('/profile');
@@ -122,7 +122,7 @@ $habitlab_app_links = [
                 </div>
             <?php else : ?>
                 <ul class="menu menu-auth">
-                    <li class="<?php echo $habitlab_current_path === $habitlab_explore_path ? 'is-active' : ''; ?>">
+                    <li>
                         <a href="<?php echo esc_url($habitlab_explore_url); ?>"><?php esc_html_e('Explore', 'habitlab'); ?></a>
                     </li>
                     <li><a href="<?php echo esc_url(wp_login_url()); ?>"><?php esc_html_e('Login', 'habitlab'); ?></a></li>

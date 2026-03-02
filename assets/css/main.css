@@ -268,11 +268,6 @@ a:focus-visible {
     background: rgba(59, 130, 246, 0.12);
 }
 
-.menu-auth li.is-active > a:not(.menu-auth__cta) {
-    box-shadow: 0 0 14px rgba(59, 130, 246, 0.24);
-    background: rgba(59, 130, 246, 0.12);
-}
-
 .user-menu {
     position: relative;
 }
