@@ -88,6 +88,7 @@ a:focus-visible {
 
 .section {
     padding: 4rem 0;
+    background: #05070d;
 }
 
 .content-wrap {
@@ -655,7 +656,7 @@ body.nav-open .site-nav {
     gap: 0.75rem;
 }
 
-.section-philosophy,
+.section-mindset,
 .section-system,
 .section-cta {
     position: relative;
@@ -664,7 +665,7 @@ body.nav-open .site-nav {
     box-shadow: none;
 }
 
-.section-philosophy {
+.section-mindset {
     background: #05070d;
 }
 
@@ -676,7 +677,7 @@ body.nav-open .site-nav {
     background: #05070d;
 }
 
-.section-philosophy::before,
+.section-mindset::before,
 .section-system::before,
 .section-cta::before {
     content: "";
@@ -697,13 +698,13 @@ body.nav-open .site-nav {
     pointer-events: none;
 }
 
-.section-philosophy::after,
+.section-mindset::after,
 .section-system::after,
 .section-cta::after {
     content: none;
 }
 
-.section-philosophy p,
+.section-mindset p,
 .section-system p,
 .section-cta p {
     max-width: 760px;
@@ -1156,11 +1157,15 @@ body.suppress-system-card-hover .system-card.card--hover:hover {
 }
 
 .system-modal__ideas li {
-    padding: 0.7rem 0.85rem 0.7rem 1.35rem;
+    padding: 0.85rem 1rem 0.85rem 2rem;
     color: var(--text-primary);
     border-left: 1px solid rgba(var(--system-accent-secondary-rgb), 0.22);
     background: linear-gradient(90deg, rgba(var(--system-accent-secondary-rgb), 0.08), rgba(0, 0, 0, 0));
     border-radius: 0 12px 12px 0;
+}
+
+.system-modal__ideas li::before {
+    left: 0.85rem;
 }
 
 .system-modal__cta {
@@ -1256,7 +1261,7 @@ body.modal-open {
         font-size: 1rem;
     }
 
-    .section-philosophy,
+    .section-mindset,
     .section-system,
     .section-cta {
         padding: 3.5rem 0;

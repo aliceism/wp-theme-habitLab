@@ -44,7 +44,7 @@ $habitlab_system_items = [
         'aside_items' => [
             esc_html__('7-8 hours of sleep', 'habitlab'),
             esc_html__('10 minutes of reading', 'habitlab'),
-            esc_html__('30 minutes of exercise)', 'habitlab'),
+            esc_html__('30 minutes of exercise', 'habitlab'),
         ],
         'cta' => esc_html__('Action builds momentum.', 'habitlab'),
     ],
