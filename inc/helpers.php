@@ -24,3 +24,18 @@ function habitlab_get_blog_url(): string
 
     return home_url('/');
 }
+
+function habitlab_get_page_url_by_slug(string $slug): string
+{
+    $page = get_page_by_path(trim($slug, '/'));
+
+    if ($page instanceof WP_Post) {
+        $page_link = get_permalink($page);
+
+        if (is_string($page_link) && $page_link !== '') {
+            return $page_link;
+        }
+    }
+
+    return home_url('/' . trim($slug, '/'));
+}

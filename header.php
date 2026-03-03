@@ -9,6 +9,10 @@ $habitlab_is_logged_in = is_user_logged_in();
 $habitlab_profile_url = $habitlab_is_logged_in ? get_edit_user_link() : '';
 $habitlab_is_front_page = is_front_page();
 $habitlab_explore_url = $habitlab_is_front_page ? '#system' : home_url('/#system');
+$habitlab_login_url = habitlab_get_page_url_by_slug('login');
+$habitlab_join_url = habitlab_get_page_url_by_slug('join');
+$habitlab_is_login_page = is_page('login');
+$habitlab_is_join_page = is_page('join');
 
 if (! is_string($habitlab_profile_url) || $habitlab_profile_url === '') {
     $habitlab_profile_url = home_url('/profile');
@@ -125,8 +129,12 @@ $habitlab_app_links = [
                     <li>
                         <a href="<?php echo esc_url($habitlab_explore_url); ?>"><?php esc_html_e('Explore', 'habitlab'); ?></a>
                     </li>
-                    <li><a href="<?php echo esc_url(wp_login_url()); ?>"><?php esc_html_e('Login', 'habitlab'); ?></a></li>
-                    <li><a class="btn btn-primary menu-auth__cta" href="<?php echo esc_url(wp_registration_url()); ?>"><?php esc_html_e('Join', 'habitlab'); ?></a></li>
+                    <li class="<?php echo $habitlab_is_login_page ? 'is-active' : ''; ?>">
+                        <a href="<?php echo esc_url($habitlab_login_url); ?>"><?php esc_html_e('Login', 'habitlab'); ?></a>
+                    </li>
+                    <li class="<?php echo $habitlab_is_join_page ? 'is-active' : ''; ?>">
+                        <a class="btn btn-primary menu-auth__cta" href="<?php echo esc_url($habitlab_join_url); ?>"><?php esc_html_e('Join', 'habitlab'); ?></a>
+                    </li>
                 </ul>
             <?php endif; ?>
         </nav>
