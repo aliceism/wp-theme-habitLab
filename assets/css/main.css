@@ -324,6 +324,18 @@ a:focus-visible {
     flex-wrap: wrap;
 }
 
+/* Footer */
+.site-footer {
+    padding: 1.5rem 0 2rem;
+    background: #05070d;
+    border-top: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+.site-footer p {
+    margin-bottom: 0;
+    color: var(--text-muted);
+}
+
 /* Pages: App */
 .app-page {
     padding-block: clamp(3.5rem, 7vw, 5rem);
@@ -477,7 +489,7 @@ a:focus-visible {
     position: sticky;
     top: 0;
     z-index: 120;
-    background: rgba(5, 7, 13, 0.94);
+    background: rgba(5, 7, 13, 0.98);
     border-bottom: 0;
     box-shadow: 0 8px 26px rgba(0, 0, 0, 0.34);
     backdrop-filter: blur(6px);
@@ -515,7 +527,7 @@ a:focus-visible {
     margin-left: auto;
     border: 1px solid rgba(148, 163, 184, 0.25);
     border-radius: 10px;
-    background: rgba(17, 24, 39, 0.9);
+    background: #05070d;
     cursor: pointer;
     transition: border-color var(--transition-base), box-shadow var(--transition-base), background-color var(--transition-base);
 }
@@ -656,7 +668,7 @@ a:focus-visible {
     padding: 0.55rem 0.75rem;
     border: 1px solid rgba(148, 163, 184, 0.22);
     border-radius: 999px;
-    background: rgba(15, 23, 42, 0.48);
+    background: rgba(5, 7, 13, 0.92);
     color: var(--text-primary);
     font: inherit;
     cursor: pointer;
@@ -731,7 +743,7 @@ a:focus-visible {
     padding: 0.55rem;
     border: 1px solid rgba(148, 163, 184, 0.2);
     border-radius: var(--radius-md);
-    background: var(--surface-card);
+    background: #05070d;
     box-shadow: 0 12px 26px rgba(0, 0, 0, 0.3), 0 0 14px rgba(59, 130, 246, 0.08);
     opacity: 1;
 }
