@@ -3,7 +3,6 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
-$habitlab_current_path = untrailingslashit(wp_parse_url(home_url(add_query_arg([])), PHP_URL_PATH) ?: '/');
 $habitlab_user = wp_get_current_user();
 $habitlab_is_logged_in = is_user_logged_in();
 $habitlab_profile_url = $habitlab_is_logged_in ? get_edit_user_link() : '';
@@ -43,18 +42,18 @@ if ($habitlab_label_name !== '') {
 $habitlab_app_links = [
     [
         'label'  => __('Dashboard', 'habitlab'),
-        'url'    => home_url('/dashboard'),
-        'active' => $habitlab_current_path === '/dashboard',
+        'url'    => habitlab_get_page_url_by_slug('dashboard'),
+        'active' => is_page('dashboard'),
     ],
     [
         'label'  => __('Habits', 'habitlab'),
-        'url'    => home_url('/habits'),
-        'active' => $habitlab_current_path === '/habits',
+        'url'    => habitlab_get_page_url_by_slug('habits'),
+        'active' => is_page('habits'),
     ],
     [
         'label'  => __('Progress', 'habitlab'),
-        'url'    => home_url('/progress'),
-        'active' => $habitlab_current_path === '/progress',
+        'url'    => habitlab_get_page_url_by_slug('progress'),
+        'active' => is_page('progress'),
     ],
 ];
 ?><!doctype html>
