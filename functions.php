@@ -8,6 +8,7 @@ $habitlab_includes = [
     'inc/setup.php',
     'inc/assets.php',
     'inc/helpers.php',
+    'inc/routing.php',
 ];
 
 foreach ($habitlab_includes as $habitlab_file) {

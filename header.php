@@ -8,6 +8,7 @@ $habitlab_is_logged_in = is_user_logged_in();
 $habitlab_profile_url = $habitlab_is_logged_in ? get_edit_user_link() : '';
 $habitlab_is_front_page = is_front_page();
 $habitlab_explore_url = $habitlab_is_front_page ? '#system' : home_url('/#system');
+$habitlab_home_url = habitlab_get_home_target_url();
 $habitlab_login_url = habitlab_get_page_url_by_slug('login');
 $habitlab_join_url = habitlab_get_page_url_by_slug('join');
 $habitlab_is_login_page = is_page('login');
@@ -67,7 +68,7 @@ $habitlab_app_links = [
 <?php wp_body_open(); ?>
 <header class="site-header">
     <div class="container site-header__inner">
-        <a class="site-logo" href="<?php echo esc_url(home_url('/')); ?>" aria-label="<?php esc_attr_e('HabitLab home', 'habitlab'); ?>">
+        <a class="site-logo" href="<?php echo esc_url($habitlab_home_url); ?>" aria-label="<?php esc_attr_e('HabitLab home', 'habitlab'); ?>">
             <span class="site-logo__base"><?php esc_html_e('HABIT', 'habitlab'); ?></span><span class="site-logo__accent"><?php esc_html_e('LAB', 'habitlab'); ?></span>
         </a>
 
