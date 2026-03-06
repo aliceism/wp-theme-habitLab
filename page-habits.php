@@ -33,11 +33,6 @@ get_header();
             </article>
         </div>
 
-        <article class="card app-card app-card--accent">
-            <?php echo do_shortcode('[habit_tracker_habits_custom]'); ?>
-            <a class="btn btn-ghost" href="<?php echo esc_url(habitlab_get_page_url_by_slug('progress')); ?>"><?php esc_html_e('View Progress', 'habitlab'); ?></a>
-        </article>
-
         <?php get_template_part('template-parts/app/shell', 'end'); ?>
     <?php endwhile; ?>
 <?php else : ?>
