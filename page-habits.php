@@ -24,13 +24,8 @@ get_header();
         <?php echo do_shortcode('[habit_tracker_habits_notice]'); ?>
 
         <div class="app-grid">
-            <article class="card app-card">
-                <?php echo do_shortcode('[habit_tracker_habits_stack]'); ?>
-            </article>
-
-            <article class="card app-card">
-                <?php echo do_shortcode('[habit_tracker_habits_shared]'); ?>
-            </article>
+            <?php echo do_shortcode('[habit_tracker_habits_stack]'); ?>
+            <?php echo do_shortcode('[habit_tracker_habits_shared]'); ?>
         </div>
 
         <?php get_template_part('template-parts/app/shell', 'end'); ?>
