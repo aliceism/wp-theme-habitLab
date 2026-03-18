@@ -291,6 +291,12 @@ body.page-template-page-habits-php .app-page-header__subtitle {
     gap: 0.35rem;
 }
 
+.habit-tracker-block--stack .habit-tracker-block__header,
+.habit-tracker-block--shared .habit-tracker-block__header {
+    min-height: 5rem;
+    align-content: start;
+}
+
 .habit-tracker-block__header > h3 {
     margin: 0;
     color: var(--ht-text-primary);
@@ -366,18 +372,29 @@ body.page-template-page-habits-php .app-page-header__subtitle {
 }
 
 .habit-tracker-habits__stack {
+    --ht-stack-gap: 0.65rem;
     display: grid;
-    gap: 0.65rem;
+    gap: var(--ht-stack-gap);
     margin: 0;
     padding: 0;
     list-style: none;
-    max-height: calc((58px * 6) + (0.65rem * 5));
+    max-height: calc((58px * 7) + (0.65rem * 6));
     overflow-y: auto;
     overflow-x: hidden;
     padding-right: 0.18rem;
     overscroll-behavior: contain;
     scrollbar-width: thin;
     scrollbar-color: rgba(148, 163, 184, 0.4) transparent;
+}
+
+.habit-tracker-habits__stack > li:first-child {
+    margin-top: 0;
+}
+
+.habit-tracker-block--stack .habit-tracker-habits__stack,
+.habit-tracker-block--stack .habit-tracker-empty-state,
+.habit-tracker-block--shared .habit-tracker-category-grid {
+    margin-top: 0;
 }
 
 .habit-tracker-stack-item {
@@ -1572,7 +1589,7 @@ body.page-template-page-habits-php .app-page-header__subtitle {
 }
 
 .habit-tracker-category-card--custom {
-    --ht-card-accent-rgb: 139, 92, 246;
+    --ht-card-accent-rgb: 59, 130, 246;
     grid-column: 1 / -1;
     min-height: 138px;
     padding-bottom: 3.25rem;
@@ -1580,24 +1597,20 @@ body.page-template-page-habits-php .app-page-header__subtitle {
     gap: 0.45rem;
     justify-items: center;
     text-align: center;
-    border-color: rgba(139, 92, 246, 0.36);
+    border-color: rgba(148, 163, 184, 0.22);
     background:
-        radial-gradient(circle at 14% 16%, rgba(59, 130, 246, 0.24), transparent 44%),
-        radial-gradient(circle at 86% 20%, rgba(192, 38, 211, 0.22), transparent 42%),
-        radial-gradient(circle at 66% 88%, rgba(236, 72, 153, 0.2), transparent 42%),
-        radial-gradient(circle at 24% 90%, rgba(34, 255, 136, 0.18), transparent 40%),
+        radial-gradient(circle at top right, rgba(59, 130, 246, 0.2), transparent 44%),
+        radial-gradient(circle at 14% 16%, rgba(192, 38, 211, 0.18), transparent 42%),
+        radial-gradient(circle at 68% 84%, rgba(236, 72, 153, 0.16), transparent 42%),
+        radial-gradient(circle at 24% 90%, rgba(34, 255, 136, 0.16), transparent 40%),
         linear-gradient(180deg, rgba(17, 24, 39, 0.94), rgba(10, 16, 28, 0.95));
-    box-shadow:
-        0 14px 28px rgba(0, 0, 0, 0.28),
-        0 0 18px rgba(59, 130, 246, 0.12),
-        0 0 20px rgba(192, 38, 211, 0.12);
 }
 
 .habit-tracker-category-card--custom::after {
     content: "+";
     left: 50%;
     right: auto;
-    bottom: 0.7rem;
+    bottom: 2rem;
     transform: translateX(-50%);
     border-color: rgba(139, 92, 246, 0.42);
     color: #ffffff;
@@ -1791,28 +1804,110 @@ body.page-template-page-habits-php .app-page-header__subtitle {
 .habit-tracker-modal-list__action {
     margin-left: auto;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    align-self: center;
 }
 
 .habit-tracker-inline-form {
     margin: 0;
 }
 
+.habit-tracker-inline-form--add {
+    --ht-add-accent-rgb: var(--ht-modal-accent-rgb, 59, 130, 246);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 40px;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.habit-tracker-add-frequency {
+    appearance: none;
+    -webkit-appearance: none;
+    height: 40px;
+    min-height: 40px;
+    min-width: 9rem;
+    padding: 0 2rem 0 0.88rem;
+    border: 0;
+    border-radius: 999px;
+    width: 100%;
+    background-color: rgba(15, 23, 42, 0.62);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6.25L8 10.25L12 6.25' stroke='%23e2e8f0' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.72rem center;
+    background-size: 0.72rem;
+    color: #f8fafc;
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    box-shadow: 0 0 0 1px rgba(var(--ht-add-accent-rgb), 0.14) inset;
+}
+
+.habit-tracker-add-frequency:focus-visible {
+    outline: 2px solid rgba(var(--ht-add-accent-rgb), 0.38);
+    outline-offset: 2px;
+    box-shadow:
+        0 0 0 1px rgba(var(--ht-add-accent-rgb), 0.2) inset,
+        0 0 14px rgba(var(--ht-add-accent-rgb), 0.22);
+}
+
 .habit-tracker-add-btn {
-    width: 44px !important;
-    min-height: 44px;
+    width: 40px !important;
+    height: 40px;
+    min-height: 40px;
     padding: 0;
     border-radius: 999px;
-    border-color: rgba(59, 130, 246, 0.52);
-    background: rgba(59, 130, 246, 0.12);
-    font-size: 1.35rem;
-    font-weight: 600;
+    border: 0;
+    background-color: rgba(15, 23, 42, 0.62);
+    background-image: none;
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: 700;
     line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    margin-top: 0 !important;
+    align-self: center;
+    box-shadow: 0 0 0 1px rgba(var(--ht-add-accent-rgb), 0.14) inset;
 }
 
 .habit-tracker-add-btn:hover,
 .habit-tracker-add-btn:focus-visible {
-    border-color: rgba(59, 130, 246, 0.76);
-    box-shadow: 0 0 16px rgba(59, 130, 246, 0.24);
+    border: 0;
+    background-color: rgba(15, 23, 42, 0.74);
+    box-shadow:
+        0 0 0 1px rgba(var(--ht-add-accent-rgb), 0.26) inset,
+        0 0 14px rgba(var(--ht-add-accent-rgb), 0.2);
+}
+
+@media (max-width: 640px) {
+    .habit-tracker-inline-form--add {
+        gap: 0.34rem;
+        grid-template-columns: minmax(0, 1fr) 38px;
+    }
+
+    .habit-tracker-add-frequency {
+        min-width: 7.9rem;
+        font-size: 0.7rem;
+        height: 38px;
+        min-height: 38px;
+    }
+
+    .habit-tracker-add-btn {
+        width: 38px !important;
+        height: 38px;
+        min-height: 38px;
+        font-size: 1.12rem;
+    }
 }
 
 .habit-tracker-form {
@@ -1931,6 +2026,61 @@ body.habit-tracker-modal-open {
 @media (min-width: 768px) {
     .habit-tracker-block {
         padding: 1.35rem 1.3rem 1.25rem;
+    }
+
+    .habit-tracker-block--stack .habit-tracker-habits__stack,
+    .habit-tracker-block--shared .habit-tracker-category-grid {
+        height: 29.3rem;
+    }
+
+    .habit-tracker-block--stack .habit-tracker-habits__stack {
+        max-height: 29.3rem;
+        grid-template-rows: none;
+        grid-auto-rows: calc((100% - (var(--ht-stack-gap) * 6)) / 7);
+        align-content: stretch;
+    }
+
+    .habit-tracker-block--stack .habit-tracker-habits__stack > .habit-tracker-stack-item {
+        min-height: 0;
+        height: 100%;
+    }
+
+    .habit-tracker-block--shared .habit-tracker-category-grid {
+        max-height: 29.3rem;
+        grid-template-rows: repeat(2, minmax(0, 1fr)) minmax(0, 1.35fr);
+        align-content: stretch;
+        align-items: stretch;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-right: 0.18rem;
+        overscroll-behavior: contain;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(148, 163, 184, 0.4) transparent;
+    }
+
+    .habit-tracker-block--shared .habit-tracker-category-card {
+        min-height: 0;
+        height: 100%;
+    }
+
+    .habit-tracker-block--shared .habit-tracker-category-card--custom {
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        gap: 0.45rem;
+    }
+
+    .habit-tracker-block--shared .habit-tracker-category-card--custom .habit-tracker-category-card__label,
+    .habit-tracker-block--shared .habit-tracker-category-card--custom .habit-tracker-category-card__meta {
+        margin-right: 0;
+    }
+
+    .habit-tracker-block--shared .habit-tracker-category-card--custom .habit-tracker-category-card__cta {
+        margin-top: 0;
+        margin-inline: auto;
     }
 
     .habit-tracker-modal__panel {
