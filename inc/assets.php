@@ -10,7 +10,7 @@ function habitlab_should_enqueue_habit_tracker_assets(): bool
         return false;
     }
 
-    if (is_page_template('page-habits.php') || is_page_template('page-dashboard.php')) {
+    if (is_page_template('page-habits.php') || is_page_template('page-dashboard.php') || is_page_template('page-progress.php')) {
         return true;
     }
 
@@ -35,6 +35,9 @@ function habitlab_should_enqueue_habit_tracker_assets(): bool
         'habit_tracker_dashboard_notice',
         'habit_tracker_dashboard_metrics',
         'habit_tracker_dashboard_panels',
+        'habit_tracker_progress',
+        'habit_tracker_progress_metrics',
+        'habit_tracker_progress_breakdown',
     ];
 
     foreach ($shortcodes as $shortcode) {
