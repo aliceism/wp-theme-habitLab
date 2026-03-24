@@ -10,7 +10,13 @@ function habitlab_should_enqueue_habit_tracker_assets(): bool
         return false;
     }
 
-    if (is_page_template('page-habits.php') || is_page_template('page-dashboard.php') || is_page_template('page-progress.php')) {
+    if (
+        is_page_template('page-habits.php') ||
+        is_page_template('page-dashboard.php') ||
+        is_page_template('page-progress.php') ||
+        is_page_template('page-profile.php') ||
+        habitlab_is_profile_page_request()
+    ) {
         return true;
     }
 
@@ -52,26 +58,39 @@ function habitlab_should_enqueue_habit_tracker_assets(): bool
 function habitlab_enqueue_assets(): void
 {
     $theme_version = wp_get_theme()->get('Version');
+    $style_path = get_stylesheet_directory() . '/style.css';
+    $main_css_path = get_template_directory() . '/assets/css/main.css';
+    $main_js_path = get_template_directory() . '/assets/js/main.js';
+
+    $style_version = is_readable($style_path)
+        ? (string) filemtime($style_path)
+        : $theme_version;
+    $main_css_version = is_readable($main_css_path)
+        ? (string) filemtime($main_css_path)
+        : $theme_version;
+    $main_js_version = is_readable($main_js_path)
+        ? (string) filemtime($main_js_path)
+        : $theme_version;
 
     wp_enqueue_style(
         'habitlab-style',
         get_stylesheet_uri(),
         [],
-        $theme_version
+        $style_version
     );
 
     wp_enqueue_style(
         'habitlab-main',
         get_template_directory_uri() . '/assets/css/main.css',
         ['habitlab-style'],
-        $theme_version
+        $main_css_version
     );
 
     wp_enqueue_script(
         'habitlab-main',
         get_template_directory_uri() . '/assets/js/main.js',
         [],
-        $theme_version,
+        $main_js_version,
         true
     );
 

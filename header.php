@@ -5,7 +5,7 @@ if (! defined('ABSPATH')) {
 
 $habitlab_user = wp_get_current_user();
 $habitlab_is_logged_in = is_user_logged_in();
-$habitlab_profile_url = $habitlab_is_logged_in ? get_edit_user_link() : '';
+$habitlab_profile_url = $habitlab_is_logged_in ? habitlab_get_profile_url() : '';
 $habitlab_is_front_page = is_front_page();
 $habitlab_explore_url = $habitlab_is_front_page ? '#system' : home_url('/#system');
 $habitlab_home_url = habitlab_get_home_target_url();

@@ -262,6 +262,207 @@ body.page-template-page-progress-php .app-page-header__subtitle {
     color: #cbd5e1;
 }
 
+body.page-profile .habitlab-profile-grid,
+body.page-template-page-profile-php .habitlab-profile-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+    align-items: stretch;
+}
+
+body.page-profile .habitlab-profile-grid > .habitlab-profile-card,
+body.page-template-page-profile-php .habitlab-profile-grid > .habitlab-profile-card {
+    height: 100%;
+    min-width: 0;
+    padding: 0.95rem 0.9rem 0.9rem;
+}
+
+body.page-profile .habit-tracker-block.habitlab-profile-card,
+body.page-template-page-profile-php .habit-tracker-block.habitlab-profile-card {
+    --ht-accent-rgb: 59, 130, 246;
+    align-content: start;
+    gap: 0.95rem;
+}
+
+body.page-profile .habitlab-profile-card--details,
+body.page-template-page-profile-php .habitlab-profile-card--details {
+    --ht-accent-rgb: 192, 38, 211;
+}
+
+body.page-profile .habitlab-profile-card--password,
+body.page-template-page-profile-php .habitlab-profile-card--password {
+    --ht-accent-rgb: 236, 72, 153;
+}
+
+body.page-profile .habitlab-profile-card h3,
+body.page-template-page-profile-php .habitlab-profile-card h3 {
+    margin: 0;
+    font-size: clamp(1.02rem, 1.6vw, 1.22rem);
+    line-height: 1.2;
+}
+
+body.page-profile .habitlab-profile-card .app-card__eyebrow,
+body.page-template-page-profile-php .habitlab-profile-card .app-card__eyebrow {
+    margin: 0;
+}
+
+body.page-profile .habitlab-profile-card__head,
+body.page-template-page-profile-php .habitlab-profile-card__head {
+    display: grid;
+    gap: 0.3rem;
+    min-height: 3.7rem;
+    align-content: start;
+}
+
+body.page-profile .habitlab-profile-card--overview .habitlab-profile-summary,
+body.page-template-page-profile-php .habitlab-profile-card--overview .habitlab-profile-summary,
+body.page-profile .habitlab-profile-card--details .habitlab-profile-form,
+body.page-template-page-profile-php .habitlab-profile-card--details .habitlab-profile-form {
+    margin-top: 0;
+}
+
+body.page-profile .habitlab-profile-alert,
+body.page-template-page-profile-php .habitlab-profile-alert {
+    --ht-notice-rgb: 59, 130, 246;
+    position: relative;
+    margin: 0;
+    padding: 0.95rem 1rem;
+    border: 1px solid rgba(var(--ht-notice-rgb), 0.35);
+    border-radius: 14px;
+    background:
+        radial-gradient(circle at top right, rgba(var(--ht-notice-rgb), 0.18), transparent 50%),
+        rgba(10, 16, 28, 0.9);
+    color: #dbeafe;
+    box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.24),
+        0 0 14px rgba(var(--ht-notice-rgb), 0.12);
+}
+
+body.page-profile .habitlab-profile-alert::before,
+body.page-template-page-profile-php .habitlab-profile-alert::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0.85rem;
+    right: 0.85rem;
+    height: 2px;
+    border-radius: 999px;
+    background: rgba(var(--ht-notice-rgb), 0.82);
+}
+
+body.page-profile .habitlab-profile-alert--success,
+body.page-template-page-profile-php .habitlab-profile-alert--success {
+    --ht-notice-rgb: 34, 255, 136;
+    color: #86efac;
+}
+
+body.page-profile .habitlab-profile-alert--error,
+body.page-template-page-profile-php .habitlab-profile-alert--error {
+    --ht-notice-rgb: 236, 72, 153;
+    color: #f9a8d4;
+}
+
+body.page-profile .habitlab-profile-summary,
+body.page-template-page-profile-php .habitlab-profile-summary {
+    display: grid;
+    gap: 0.62rem;
+    margin: 0;
+}
+
+body.page-profile .habitlab-profile-summary__row,
+body.page-template-page-profile-php .habitlab-profile-summary__row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+    align-items: start;
+    margin: 0;
+    padding: 0.5rem 0.6rem;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 12px;
+    background: rgba(8, 12, 24, 0.52);
+}
+
+body.page-profile .habitlab-profile-summary__row dt,
+body.page-template-page-profile-php .habitlab-profile-summary__row dt {
+    margin: 0;
+    color: #cbd5e1;
+    font-size: 0.86rem;
+}
+
+body.page-profile .habitlab-profile-summary__row dd,
+body.page-template-page-profile-php .habitlab-profile-summary__row dd {
+    margin: 0;
+    color: #f8fafc;
+    font-weight: 600;
+}
+
+body.page-profile .habitlab-profile-form,
+body.page-template-page-profile-php .habitlab-profile-form {
+    display: grid;
+    gap: 0.62rem;
+}
+
+body.page-profile .habitlab-profile-form > p,
+body.page-template-page-profile-php .habitlab-profile-form > p {
+    display: grid;
+    gap: 0.3rem;
+    margin: 0;
+}
+
+body.page-profile .habitlab-profile-form label,
+body.page-template-page-profile-php .habitlab-profile-form label {
+    color: #cbd5e1;
+    font-size: 0.81rem;
+    font-weight: 500;
+}
+
+body.page-profile .habitlab-profile-form input,
+body.page-template-page-profile-php .habitlab-profile-form input {
+    width: 100%;
+    min-height: 40px;
+    padding: 0.62rem 0.72rem;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 12px;
+    background: rgba(7, 11, 20, 0.85);
+    color: #f8fafc;
+    font: inherit;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+body.page-profile .habitlab-profile-form input::placeholder,
+body.page-template-page-profile-php .habitlab-profile-form input::placeholder {
+    color: rgba(148, 163, 184, 0.75);
+}
+
+body.page-profile .habitlab-profile-form input:focus-visible,
+body.page-template-page-profile-php .habitlab-profile-form input:focus-visible {
+    outline: none;
+    border-color: rgba(var(--ht-accent-rgb, 59, 130, 246), 0.55);
+    box-shadow: 0 0 0 4px rgba(var(--ht-accent-rgb, 59, 130, 246), 0.14);
+    background: rgba(10, 16, 28, 0.95);
+}
+
+body.page-profile .habitlab-profile-form .btn,
+body.page-template-page-profile-php .habitlab-profile-form .btn {
+    width: 100%;
+    margin-top: 0.12rem;
+}
+
+@media (max-width: 980px) {
+    body.page-profile .habitlab-profile-grid,
+    body.page-template-page-profile-php .habitlab-profile-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.65rem;
+    }
+}
+
+@media (max-width: 700px) {
+    body.page-profile .habitlab-profile-grid,
+    body.page-template-page-profile-php .habitlab-profile-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 .habit-tracker-habits {
     display: grid;
     gap: 1.25rem;
