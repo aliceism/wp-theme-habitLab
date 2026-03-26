@@ -532,6 +532,10 @@ body.page-template-page-profile-php .habitlab-profile-form .btn {
     --ht-accent-rgb: 59, 130, 246;
 }
 
+.habit-tracker-habits .habit-tracker-block--shared {
+    overflow: visible;
+}
+
 .habit-tracker-block > :last-child {
     margin-bottom: 0;
 }
@@ -2937,8 +2941,7 @@ body.habit-tracker-modal-open {
         grid-template-rows: repeat(2, minmax(0, 1fr)) minmax(0, 1.35fr);
         align-content: stretch;
         align-items: stretch;
-        overflow-y: auto;
-        overflow-x: hidden;
+        overflow: visible;
         padding-right: 0.18rem;
         overscroll-behavior: contain;
         scrollbar-width: thin;
