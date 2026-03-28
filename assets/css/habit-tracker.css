@@ -632,6 +632,17 @@ body.page-template-page-profile-php .habitlab-profile-form .btn {
     transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
+.habit-tracker-stack-item:hover,
+.habit-tracker-stack-item:focus-within {
+    border-color: rgba(var(--ht-stack-accent-rgb), 0.52);
+    background:
+        linear-gradient(180deg, rgba(15, 23, 42, 0.78), rgba(10, 16, 28, 0.78));
+    box-shadow:
+        0 0 0 1px rgba(var(--ht-stack-accent-rgb), 0.16) inset,
+        inset 0 0 22px rgba(var(--ht-stack-accent-rgb), 0.14);
+    transform: none;
+}
+
 .habit-tracker-stack-item::before {
     content: "";
     position: absolute;
