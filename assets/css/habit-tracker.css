@@ -1011,12 +1011,12 @@ body.page-template-page-profile-php .habitlab-profile-form .btn {
 .habit-tracker-progress-week-col__value {
     position: absolute;
     left: 50%;
-    bottom: clamp(0.2rem, calc(var(--ht-week-bar-height, 0%) + 0.24rem), calc(100% - 1rem));
+    top: 0.32rem;
     transform: translateX(-50%);
     z-index: 2;
     line-height: 1;
     font-size: 0.72rem;
-    color: #cbd5e1;
+    color: #f8fafc;
 }
 
 .habit-tracker-progress-week-col__track {
