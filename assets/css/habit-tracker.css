@@ -646,11 +646,29 @@ body.page-template-page-profile-php .habitlab-profile-form .btn {
 }
 
 .habit-tracker-stack-item__name {
-    flex: 1 1 auto;
     min-width: 0;
-    margin-left: 0.35rem;
     color: var(--ht-text-primary);
     font-weight: 600;
+}
+
+.habit-tracker-stack-item__open {
+    display: inline-flex;
+    align-items: center;
+    flex: 1 1 auto;
+    min-width: 0;
+    margin: 0 0 0 0.35rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.habit-tracker-stack-item__open:focus-visible {
+    outline: 2px solid rgba(var(--ht-stack-accent-rgb), 0.45);
+    outline-offset: 3px;
+    border-radius: 8px;
 }
 
 .habit-tracker-stack-item__controls {
@@ -2565,6 +2583,56 @@ body.page-template-page-profile-php .habitlab-profile-form .btn {
 .habit-tracker-modal__close:focus-visible {
     outline: 2px solid rgba(59, 130, 246, 0.68);
     outline-offset: 2px;
+}
+
+.habit-tracker-stack-modal__title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
+
+.habit-tracker-stack-modal__title-row h4 {
+    margin: 0;
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.habit-tracker-stack-modal__meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0;
+    padding: 0.5rem 0.72rem;
+    border: 1px solid rgba(var(--ht-modal-accent-rgb), 0.28);
+    border-radius: 999px;
+    background: rgba(var(--ht-modal-accent-rgb), 0.12);
+    color: #f8fafc;
+}
+
+.habit-tracker-stack-modal__meta-label {
+    color: rgba(226, 232, 240, 0.78);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.habit-tracker-stack-modal__meta strong {
+    color: #ffffff;
+    font-size: 0.86rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+}
+
+.habit-tracker-stack-modal__description p {
+    margin: 0;
+}
+
+.habit-tracker-stack-modal__description p + p {
+    margin-top: 0.42rem;
+    color: var(--ht-text-secondary);
+    line-height: 1.55;
 }
 
 .habit-tracker-modal-list {

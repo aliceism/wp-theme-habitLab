@@ -24,18 +24,35 @@ $remove_action = isset($remove_action) && is_string($remove_action) && $remove_a
         <p class="habit-tracker-empty-state"><?php esc_html_e('No habits in your dashboard yet. Add one from the shared list or create a custom habit.', 'habit-tracker'); ?></p>
     <?php else : ?>
         <ul class="habit-tracker-habits__stack">
-            <?php foreach ($items as $item) : ?>
+            <?php foreach ($items as $item_index => $item) : ?>
                 <?php
                 $stack_item_id = isset($item['id']) ? (int) $item['id'] : 0;
                 $category_class = sanitize_key((string) ($item['category_class'] ?? 'life'));
                 $habit_name = (string) ($item['name'] ?? '');
+                $habit_description = trim((string) ($item['description'] ?? ''));
+                $habit_target_label = (string) ($item['target_label'] ?? __('Everyday', 'habit-tracker'));
+                $stack_modal_id = $stack_item_id > 0
+                    ? 'habit-tracker-stack-modal-' . $stack_item_id
+                    : 'habit-tracker-stack-modal-' . ($item_index + 1);
                 ?>
                 <li class="habit-tracker-stack-item habit-tracker-stack-item--<?php echo esc_attr($category_class); ?>">
-                    <span class="habit-tracker-stack-item__name"><?php echo esc_html($habit_name); ?></span>
+                    <button
+                        type="button"
+                        class="habit-tracker-stack-item__open"
+                        data-ht-open-modal="<?php echo esc_attr($stack_modal_id); ?>"
+                        aria-label="<?php echo esc_attr(sprintf(__('Open details for %s', 'habit-tracker'), $habit_name)); ?>"
+                    >
+                        <span class="habit-tracker-stack-item__name"><?php echo esc_html($habit_name); ?></span>
+                    </button>
 
                     <?php if ($stack_item_id > 0) : ?>
                         <div class="habit-tracker-stack-item__controls">
-                            <form class="habit-tracker-inline-form" method="post" action="<?php echo esc_url($admin_post_url); ?>">
+                            <form
+                                class="habit-tracker-inline-form"
+                                method="post"
+                                action="<?php echo esc_url($admin_post_url); ?>"
+                                data-ht-confirm="<?php esc_attr_e('Remove this habit from your dashboard stack?', 'habit-tracker'); ?>"
+                            >
                                 <input type="hidden" name="action" value="<?php echo esc_attr($remove_action); ?>">
                                 <input type="hidden" name="user_habit_id" value="<?php echo esc_attr((string) $stack_item_id); ?>">
                                 <input type="hidden" name="redirect_to" value="<?php echo esc_url($redirect); ?>">
@@ -54,5 +71,54 @@ $remove_action = isset($remove_action) && is_string($remove_action) && $remove_a
                 </li>
             <?php endforeach; ?>
         </ul>
+
+        <?php foreach ($items as $item_index => $item) : ?>
+            <?php
+            $stack_item_id = isset($item['id']) ? (int) $item['id'] : 0;
+            $category_class = sanitize_key((string) ($item['category_class'] ?? 'life'));
+            $habit_name = (string) ($item['name'] ?? '');
+            $habit_description = trim((string) ($item['description'] ?? ''));
+            $habit_target_label = (string) ($item['target_label'] ?? __('Everyday', 'habit-tracker'));
+            $stack_modal_id = $stack_item_id > 0
+                ? 'habit-tracker-stack-modal-' . $stack_item_id
+                : 'habit-tracker-stack-modal-' . ($item_index + 1);
+            $stack_modal_title_id = $stack_modal_id . '-title';
+            ?>
+            <div class="habit-tracker-modal" data-ht-modal="<?php echo esc_attr($stack_modal_id); ?>" hidden>
+                <div class="habit-tracker-modal__backdrop" data-ht-close-modal></div>
+                <div
+                    class="habit-tracker-modal__panel habit-tracker-modal__panel--<?php echo esc_attr($category_class); ?>"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="<?php echo esc_attr($stack_modal_title_id); ?>"
+                >
+                    <div class="habit-tracker-modal__header">
+                        <p class="app-card__eyebrow"><?php esc_html_e('Habit Details', 'habit-tracker'); ?></p>
+                        <div class="habit-tracker-stack-modal__title-row">
+                            <h4 id="<?php echo esc_attr($stack_modal_title_id); ?>"><?php echo esc_html($habit_name); ?></h4>
+                            <div class="habit-tracker-stack-modal__meta">
+                                <span class="habit-tracker-stack-modal__meta-label"><?php esc_html_e('Weekly Goal', 'habit-tracker'); ?></span>
+                                <strong><?php echo esc_html($habit_target_label); ?></strong>
+                            </div>
+                        </div>
+                        <button type="button" class="habit-tracker-modal__close" data-ht-close-modal aria-label="<?php esc_attr_e('Close', 'habit-tracker'); ?>">
+                            &times;
+                        </button>
+                    </div>
+
+                    <div class="habit-tracker-stack-modal__description">
+                        <p>
+                            <?php
+                            echo esc_html(
+                                $habit_description !== ''
+                                    ? $habit_description
+                                    : __('No description added for this habit yet.', 'habit-tracker')
+                            );
+                            ?>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
     <?php endif; ?>
 </article>
