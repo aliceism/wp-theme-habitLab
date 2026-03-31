@@ -45,11 +45,13 @@ foreach ($month_rows as $month_row) {
                         $completed = (int) ($row['completed'] ?? 0);
                         $height = $completed > 0 ? round(($completed / $week_max_completed) * 100, 2) : 0;
                         $day_label = (string) ($row['day_label'] ?? '');
+                        $bar_state_class = $completed > 0 ? 'is-filled' : 'is-empty';
                         ?>
                         <div class="habit-tracker-progress-week-col" style="--ht-week-bar-height: <?php echo esc_attr((string) $height); ?>%;">
                             <span class="habit-tracker-progress-week-col__track">
-                                <span class="habit-tracker-progress-week-col__bar"></span>
-                                <span class="habit-tracker-progress-week-col__value"><?php echo esc_html((string) $completed); ?></span>
+                                <span class="habit-tracker-progress-week-col__bar <?php echo esc_attr($bar_state_class); ?>">
+                                    <span class="habit-tracker-progress-week-col__value"><?php echo esc_html((string) $completed); ?></span>
+                                </span>
                             </span>
                             <span class="habit-tracker-progress-week-col__label"><?php echo esc_html($day_label); ?></span>
                         </div>

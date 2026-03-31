@@ -15,6 +15,10 @@ function habitlab_should_enqueue_habit_tracker_assets(): bool
         is_page_template('page-dashboard.php') ||
         is_page_template('page-progress.php') ||
         is_page_template('page-profile.php') ||
+        is_page('habits') ||
+        is_page('dashboard') ||
+        is_page('progress') ||
+        is_page('profile') ||
         habitlab_is_profile_page_request()
     ) {
         return true;
