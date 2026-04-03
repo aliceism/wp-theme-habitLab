@@ -409,6 +409,11 @@ body.page-template-page-profile-php .habitlab-profile-form > p {
     margin: 0;
 }
 
+body.page-profile .habitlab-profile-form > p:last-child,
+body.page-template-page-profile-php .habitlab-profile-form > p:last-child {
+    margin-top: 1.4rem;
+}
+
 body.page-profile .habitlab-profile-form label,
 body.page-template-page-profile-php .habitlab-profile-form label {
     color: #cbd5e1;
@@ -445,7 +450,26 @@ body.page-template-page-profile-php .habitlab-profile-form input:focus-visible {
 body.page-profile .habitlab-profile-form .btn,
 body.page-template-page-profile-php .habitlab-profile-form .btn {
     width: 100%;
-    margin-top: 0.12rem;
+    margin-top: 0;
+}
+
+#habitlab-profile-modal-details-title,
+body.page-profile #habitlab-profile-modal-details-title,
+body.page-template-page-profile-php #habitlab-profile-modal-details-title {
+    max-width: none !important;
+    width: fit-content;
+    display: grid;
+    gap: 0;
+    white-space: nowrap;
+    font-size: clamp(2.1rem, 5.4vw, 3.25rem) !important;
+}
+
+#habitlab-profile-modal-details-title .habitlab-profile-modal__title-line,
+body.page-profile #habitlab-profile-modal-details-title .habitlab-profile-modal__title-line,
+body.page-template-page-profile-php #habitlab-profile-modal-details-title .habitlab-profile-modal__title-line {
+    display: block;
+    white-space: nowrap;
+    line-height: 0.98;
 }
 
 @media (max-width: 980px) {

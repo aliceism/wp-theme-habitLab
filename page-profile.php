@@ -146,7 +146,9 @@ get_header();
                     </button>
 
                     <p class="system-modal__eyebrow"><?php esc_html_e('Profile', 'habitlab'); ?></p>
-                    <h3 id="habitlab-profile-modal-details-title"><?php esc_html_e('Update Account Details', 'habitlab'); ?></h3>
+                    <h3 id="habitlab-profile-modal-details-title">
+                        <?php esc_html_e('Update Account Details', 'habitlab'); ?>
+                    </h3>
 
                     <div class="habitlab-profile-modal__body">
                         <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" class="habitlab-profile-form">

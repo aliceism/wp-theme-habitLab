@@ -1986,6 +1986,36 @@ body.suppress-system-card-hover .system-card.card--hover:hover {
     text-shadow: 0 0 24px rgba(var(--system-accent-rgb), 0.12);
 }
 
+#habitlab-profile-modal-details-title {
+    max-width: none;
+    width: fit-content;
+    display: grid;
+    gap: 0;
+    white-space: nowrap;
+}
+
+#habitlab-profile-modal-details-title .habitlab-profile-modal__title-line {
+    display: block;
+    white-space: nowrap;
+    line-height: 0.98;
+}
+
+#habitlab-profile-modal-password-title {
+    max-width: none;
+    width: fit-content;
+    white-space: nowrap;
+}
+
+#habitlab-profile-modal-details .habitlab-profile-form > p:last-of-type,
+#habitlab-profile-modal-password .habitlab-profile-form > p:last-of-type {
+    margin-top: 1.6rem !important;
+}
+
+#habitlab-profile-modal-details .habitlab-profile-form .btn,
+#habitlab-profile-modal-password .habitlab-profile-form .btn {
+    margin-top: 0 !important;
+}
+
 .system-modal .gradient-text {
     display: block;
     width: fit-content;
