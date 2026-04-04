@@ -2093,11 +2093,11 @@ body.suppress-system-card-hover .system-card.card--hover:hover {
 }
 
 .system-modal__bullets li:nth-child(2) {
-    transform: translateX(0.65rem);
+    transform: none;
 }
 
 .system-modal__bullets li:nth-child(3) {
-    transform: translateX(1.1rem);
+    transform: none;
 }
 
 .system-modal__bullets li::before,

@@ -109,9 +109,6 @@ $habitlab_system_items = [
                 <div class="system-modal__backdrop" data-modal-close></div>
 
                 <div class="system-modal__dialog" role="document" tabindex="-1">
-                    <div class="system-modal__watermark" aria-hidden="true">
-                        <?php echo esc_html(strtoupper($habitlab_item['label'])); ?></div>
-
                     <button class="system-modal__close" type="button" data-modal-close
                         aria-label="<?php echo esc_attr(sprintf(__('Close %s modal', 'habitlab'), strtolower($habitlab_item['label']))); ?>">
                         <span aria-hidden="true">&times;</span>
