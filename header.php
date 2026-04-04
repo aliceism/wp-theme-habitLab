@@ -42,14 +42,14 @@ if ($habitlab_label_name !== '') {
 
 $habitlab_app_links = [
     [
-        'label'  => __('Dashboard', 'habitlab'),
-        'url'    => habitlab_get_page_url_by_slug('dashboard'),
-        'active' => is_page('dashboard'),
-    ],
-    [
         'label'  => __('Habits', 'habitlab'),
         'url'    => habitlab_get_page_url_by_slug('habits'),
         'active' => is_page('habits'),
+    ],
+    [
+        'label'  => __('Dashboard', 'habitlab'),
+        'url'    => habitlab_get_page_url_by_slug('dashboard'),
+        'active' => is_page('dashboard'),
     ],
     [
         'label'  => __('Progress', 'habitlab'),
