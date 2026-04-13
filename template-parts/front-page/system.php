@@ -23,7 +23,7 @@ $habitlab_system_items = [
             esc_html__('Discipline is a design choice.', 'habitlab'),
         ],
         'cta' => esc_html__('Learn the principles. Then apply them.', 'habitlab'),
-        'visual_image' => content_url('plugins/habit-tracker/assets/reference-images/habits-reference.jpeg'),
+        'visual_image' => content_url('plugins/habit-tracker/assets/reference-images/habits-reference-cropped.jpeg'),
     ],
     [
         'slug' => 'practice',
@@ -48,7 +48,7 @@ $habitlab_system_items = [
             esc_html__('30 minutes of exercise', 'habitlab'),
         ],
         'cta' => esc_html__('Action builds momentum.', 'habitlab'),
-        'visual_image' => content_url('plugins/habit-tracker/assets/reference-images/dashboard-reference.jpeg'),
+        'visual_image' => content_url('plugins/habit-tracker/assets/reference-images/dashboard-reference-cropped.jpeg'),
     ],
     [
         'slug' => 'proof',
@@ -73,7 +73,7 @@ $habitlab_system_items = [
             esc_html__('Active Habits', 'habitlab'),
         ],
         'cta' => esc_html__('Proof turns effort into belief.', 'habitlab'),
-        'visual_image' => content_url('plugins/habit-tracker/assets/reference-images/progress-reference.jpeg'),
+        'visual_image' => content_url('plugins/habit-tracker/assets/reference-images/progress-reference-cropped.jpeg'),
     ],
 ];
 ?>
