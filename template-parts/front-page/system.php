@@ -23,6 +23,7 @@ $habitlab_system_items = [
             esc_html__('Discipline is a design choice.', 'habitlab'),
         ],
         'cta' => esc_html__('Learn the principles. Then apply them.', 'habitlab'),
+        'visual_image' => content_url('plugins/habit-tracker/assets/reference-images/habits-reference.jpeg'),
     ],
     [
         'slug' => 'practice',
@@ -47,6 +48,7 @@ $habitlab_system_items = [
             esc_html__('30 minutes of exercise', 'habitlab'),
         ],
         'cta' => esc_html__('Action builds momentum.', 'habitlab'),
+        'visual_image' => content_url('plugins/habit-tracker/assets/reference-images/dashboard-reference.jpeg'),
     ],
     [
         'slug' => 'proof',
@@ -71,6 +73,7 @@ $habitlab_system_items = [
             esc_html__('Active Habits', 'habitlab'),
         ],
         'cta' => esc_html__('Proof turns effort into belief.', 'habitlab'),
+        'visual_image' => content_url('plugins/habit-tracker/assets/reference-images/progress-reference.jpeg'),
     ],
 ];
 ?>
@@ -153,6 +156,18 @@ $habitlab_system_items = [
                             </div>
                         </aside>
                     </div>
+
+                    <?php if (isset($habitlab_item['visual_image']) && is_string($habitlab_item['visual_image']) && $habitlab_item['visual_image'] !== '') : ?>
+                        <div class="system-modal__visual-panel system-modal__visual-panel--full">
+                            <figure class="system-modal__visual">
+                                <img
+                                    src="<?php echo esc_url($habitlab_item['visual_image']); ?>"
+                                    alt="<?php echo esc_attr(sprintf(__('%s preview', 'habitlab'), (string) $habitlab_item['label'])); ?>"
+                                    loading="lazy"
+                                >
+                            </figure>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         <?php endforeach; ?>

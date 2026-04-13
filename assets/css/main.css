@@ -2138,6 +2138,23 @@ body.suppress-system-card-hover .system-card.card--hover:hover {
     transform: translateY(1rem);
 }
 
+.system-modal__visual-panel {
+    position: relative;
+    padding: 0.55rem;
+    border: 1px solid rgba(var(--system-accent-secondary-rgb), 0.24);
+    border-radius: 20px;
+    background:
+        radial-gradient(circle at top right, rgba(var(--system-accent-secondary-rgb), 0.16), transparent 36%),
+        linear-gradient(180deg, rgba(var(--system-surface-aside-rgb), 0.9), rgba(var(--system-surface-main-rgb), 0.95));
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.02),
+        0 0 26px rgba(var(--system-accent-secondary-rgb), 0.1);
+}
+
+.system-modal__visual-panel--full {
+    margin-top: 1.15rem;
+}
+
 .system-modal__aside-card::before {
     content: "";
     position: absolute;
@@ -2166,6 +2183,23 @@ body.suppress-system-card-hover .system-card.card--hover:hover {
     margin-bottom: 0.55rem;
     font-size: 1.35rem;
     color: rgba(var(--system-accent-secondary-rgb), 1);
+}
+
+.system-modal__visual {
+    margin: 0;
+    border: 1px solid rgba(var(--system-accent-secondary-rgb), 0.28);
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(2, 6, 23, 0.82);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.32);
+}
+
+.system-modal__visual img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: auto;
+    object-fit: contain;
 }
 
 .system-modal__section-intro {
@@ -2337,6 +2371,10 @@ body.modal-open {
     .system-modal__aside-card {
         padding: 1.15rem;
         transform: none;
+    }
+
+    .system-modal__visual-panel {
+        padding: 0.45rem;
     }
 
     .system-modal__main {
