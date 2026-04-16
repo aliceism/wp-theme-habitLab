@@ -173,6 +173,12 @@ foreach ($month_rows as $month_row) {
             <?php if (! $has_active_habits) : ?>
                 <p class="habit-tracker-empty-state"><?php esc_html_e('No active habits in your dashboard stack yet.', 'habit-tracker'); ?></p>
             <?php else : ?>
+                <div class="habit-tracker-progress-list-head" aria-hidden="true">
+                    <span><?php esc_html_e('Category', 'habit-tracker'); ?></span>
+                    <span><?php esc_html_e('Weekly', 'habit-tracker'); ?></span>
+                    <span><?php esc_html_e('Monthly', 'habit-tracker'); ?></span>
+                </div>
+
                 <ul class="habit-tracker-progress-list">
                     <?php foreach ($category_stats as $stat) : ?>
                         <?php if ((int) ($stat['active_habits'] ?? 0) <= 0) : ?>
@@ -205,40 +211,42 @@ foreach ($month_rows as $month_row) {
                                 </span>
                             </div>
 
-                            <div class="habit-tracker-progress-item__line">
-                                <span><?php esc_html_e('Week', 'habit-tracker'); ?></span>
+                            <div class="habit-tracker-progress-item__line habit-tracker-progress-item__line--week">
+                                <span class="habit-tracker-progress-item__line-label"><?php esc_html_e('Week', 'habit-tracker'); ?></span>
                                 <span class="habit-tracker-progress-bar">
                                     <span style="width: <?php echo esc_attr((string) $week_percent); ?>%;"></span>
                                 </span>
                                 <strong>
                                     <?php
                                     printf(
-                                        esc_html__('%1$d/%2$d', 'habit-tracker'),
+                                        esc_html__('%1$d/%2$d · %3$d%%', 'habit-tracker'),
                                         $completed_week,
-                                        $target_week
+                                        $target_week,
+                                        $week_percent
                                     );
                                     ?>
                                 </strong>
                             </div>
 
-                            <div class="habit-tracker-progress-item__line">
-                                <span><?php esc_html_e('Month', 'habit-tracker'); ?></span>
+                            <div class="habit-tracker-progress-item__line habit-tracker-progress-item__line--month">
+                                <span class="habit-tracker-progress-item__line-label"><?php esc_html_e('Month', 'habit-tracker'); ?></span>
                                 <span class="habit-tracker-progress-bar">
                                     <span style="width: <?php echo esc_attr((string) $month_percent); ?>%;"></span>
                                 </span>
                                 <strong>
                                     <?php
                                     printf(
-                                        esc_html__('%1$d/%2$d', 'habit-tracker'),
+                                        esc_html__('%1$d/%2$d · %3$d%%', 'habit-tracker'),
                                         $completed_month,
-                                        $target_month
+                                        $target_month,
+                                        $month_percent
                                     );
                                     ?>
                                 </strong>
                             </div>
 
                             <div class="habit-tracker-progress-item__foot">
-                                <span>
+                                <span class="habit-tracker-progress-item__chip">
                                     <?php
                                     printf(
                                         esc_html__('Today: %1$d/%2$d', 'habit-tracker'),
@@ -247,7 +255,7 @@ foreach ($month_rows as $month_row) {
                                     );
                                     ?>
                                 </span>
-                                <span>
+                                <span class="habit-tracker-progress-item__chip">
                                     <?php
                                     printf(
                                         esc_html__('Consistency: %d%%', 'habit-tracker'),
@@ -263,15 +271,15 @@ foreach ($month_rows as $month_row) {
         </article>
 
         <div class="app-grid habit-tracker-progress-insights-grid">
-            <article class="card app-card app-card--accent habit-tracker-progress-card habit-tracker-progress-card--insights">
+            <article class="card app-card app-card--accent habit-tracker-progress-card habit-tracker-progress-card--insights habit-tracker-progress-card--insights-category">
                 <p class="app-card__eyebrow"><?php esc_html_e('Insights', 'habit-tracker'); ?></p>
                 <h3><?php esc_html_e('Category-driven review for this month.', 'habit-tracker'); ?></h3>
 
                 <?php if (! $has_active_habits) : ?>
-                    <p><?php esc_html_e('Build your stack first, then this page will surface category signals and trend comparisons automatically.', 'habit-tracker'); ?></p>
+                    <p class="habit-tracker-progress-insights__empty"><?php esc_html_e('Build your stack first, then this page will surface category signals and trend comparisons automatically.', 'habit-tracker'); ?></p>
                 <?php else : ?>
                     <ul class="app-list habit-tracker-progress-insights habit-tracker-progress-insights--category">
-                        <li>
+                        <li class="habit-tracker-progress-insight-item">
                             <?php
                             printf(
                                 esc_html__('Monthly completion: %1$d/%2$d (%3$d%%)', 'habit-tracker'),
@@ -281,7 +289,7 @@ foreach ($month_rows as $month_row) {
                             );
                             ?>
                         </li>
-                        <li>
+                        <li class="habit-tracker-progress-insight-item">
                             <?php
                             if (is_array($summary['best_category'] ?? null)) {
                                 printf(
@@ -294,7 +302,7 @@ foreach ($month_rows as $month_row) {
                             }
                             ?>
                         </li>
-                        <li>
+                        <li class="habit-tracker-progress-insight-item">
                             <?php
                             if (is_array($summary['focus_category'] ?? null)) {
                                 printf(
@@ -307,7 +315,7 @@ foreach ($month_rows as $month_row) {
                             }
                             ?>
                         </li>
-                        <li>
+                        <li class="habit-tracker-progress-insight-item">
                             <?php
                             if (is_array($summary['longest_streak_category'] ?? null)) {
                                 printf(
@@ -324,15 +332,15 @@ foreach ($month_rows as $month_row) {
                 <?php endif; ?>
             </article>
 
-            <article class="card app-card app-card--accent habit-tracker-progress-card habit-tracker-progress-card--insights">
+            <article class="card app-card app-card--accent habit-tracker-progress-card habit-tracker-progress-card--insights habit-tracker-progress-card--insights-habit">
                 <p class="app-card__eyebrow"><?php esc_html_e('Insights', 'habit-tracker'); ?></p>
                 <h3><?php esc_html_e('Habit-driven review for this month.', 'habit-tracker'); ?></h3>
 
                 <?php if (! $has_active_habits) : ?>
-                    <p><?php esc_html_e('Add habits to unlock individual habit insights and priority signals.', 'habit-tracker'); ?></p>
+                    <p class="habit-tracker-progress-insights__empty"><?php esc_html_e('Add habits to unlock individual habit insights and priority signals.', 'habit-tracker'); ?></p>
                 <?php else : ?>
                     <ul class="app-list habit-tracker-progress-insights habit-tracker-progress-insights--habit">
-                        <li>
+                        <li class="habit-tracker-progress-insight-item">
                             <?php
                             if (is_array($summary['best_habit'] ?? null)) {
                                 printf(
@@ -346,7 +354,7 @@ foreach ($month_rows as $month_row) {
                             }
                             ?>
                         </li>
-                        <li>
+                        <li class="habit-tracker-progress-insight-item">
                             <?php
                             if (is_array($summary['focus_habit'] ?? null)) {
                                 printf(
@@ -360,7 +368,7 @@ foreach ($month_rows as $month_row) {
                             }
                             ?>
                         </li>
-                        <li>
+                        <li class="habit-tracker-progress-insight-item">
                             <?php
                             if (is_array($summary['weekly_leader_habit'] ?? null)) {
                                 printf(
