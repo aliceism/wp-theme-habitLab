@@ -11,6 +11,7 @@ $category_stats = isset($category_stats) && is_array($category_stats) ? $categor
 $has_active_habits = ! empty($has_active_habits);
 $include_root_wrapper = ! empty($include_root_wrapper);
 $month_svg_points = isset($month_svg_points) ? (string) $month_svg_points : '';
+$category_labels = HabitTracker\Domain\Rules\HabitRules::categoryLabels(true);
 
 $week_rows = isset($week_chart['rows']) && is_array($week_chart['rows']) ? $week_chart['rows'] : [];
 $week_max_completed = max(1, (int) ($week_chart['max_completed'] ?? 1));
@@ -99,10 +100,17 @@ foreach ($month_rows as $month_row) {
             <?php if (! $has_active_habits || $habit_rows === []) : ?>
                 <p class="habit-tracker-empty-state"><?php esc_html_e('Add habits to see individual habit chart rows.', 'habit-tracker'); ?></p>
             <?php else : ?>
+                <div class="habit-tracker-progress-habit-chart-head" aria-hidden="true">
+                    <span><?php esc_html_e('Habit', 'habit-tracker'); ?></span>
+                    <span><?php esc_html_e('Weekly', 'habit-tracker'); ?></span>
+                    <span><?php esc_html_e('Monthly', 'habit-tracker'); ?></span>
+                </div>
+
                 <ul class="habit-tracker-progress-habit-chart">
                     <?php foreach ($habit_rows as $row) : ?>
                         <?php
                         $category_key = sanitize_key((string) ($row['category'] ?? HabitTracker\Domain\Rules\HabitRules::CATEGORY_LIFE));
+                        $category_label = (string) ($category_labels[$category_key] ?? ucfirst($category_key));
                         $name = (string) ($row['name'] ?? '');
                         $completed_week = (int) ($row['completed_week'] ?? 0);
                         $target_week = (int) ($row['target_week'] ?? 0);
@@ -114,33 +122,41 @@ foreach ($month_rows as $month_row) {
                         <li class="habit-tracker-progress-habit-row habit-tracker-progress-habit-row--<?php echo esc_attr($category_key); ?>">
                             <div class="habit-tracker-progress-habit-row__head">
                                 <span class="habit-tracker-progress-habit-row__name"><?php echo esc_html($name); ?></span>
-                                <span class="habit-tracker-progress-habit-row__meta">
-                                    <?php
-                                    printf(
-                                        esc_html__('W %1$d/%2$d · M %3$d/%4$d', 'habit-tracker'),
-                                        $completed_week,
-                                        $target_week,
-                                        $completed_month,
-                                        $target_month
-                                    );
-                                    ?>
-                                </span>
+                                <span class="habit-tracker-progress-habit-row__meta"><?php echo esc_html($category_label); ?></span>
                             </div>
 
-                            <div class="habit-tracker-progress-habit-row__line">
-                                <span><?php esc_html_e('Week', 'habit-tracker'); ?></span>
+                            <div class="habit-tracker-progress-habit-row__line habit-tracker-progress-habit-row__line--week">
+                                <span class="habit-tracker-progress-habit-row__line-label"><?php esc_html_e('Week', 'habit-tracker'); ?></span>
                                 <span class="habit-tracker-progress-bar">
                                     <span style="width: <?php echo esc_attr((string) $week_percent); ?>%;"></span>
                                 </span>
-                                <strong><?php echo esc_html((string) $week_percent); ?>%</strong>
+                                <strong>
+                                    <?php
+                                    printf(
+                                        esc_html__('%1$d/%2$d · %3$d%%', 'habit-tracker'),
+                                        $completed_week,
+                                        $target_week,
+                                        $week_percent
+                                    );
+                                    ?>
+                                </strong>
                             </div>
 
-                            <div class="habit-tracker-progress-habit-row__line">
-                                <span><?php esc_html_e('Month', 'habit-tracker'); ?></span>
+                            <div class="habit-tracker-progress-habit-row__line habit-tracker-progress-habit-row__line--month">
+                                <span class="habit-tracker-progress-habit-row__line-label"><?php esc_html_e('Month', 'habit-tracker'); ?></span>
                                 <span class="habit-tracker-progress-bar">
                                     <span style="width: <?php echo esc_attr((string) $month_percent); ?>%;"></span>
                                 </span>
-                                <strong><?php echo esc_html((string) $month_percent); ?>%</strong>
+                                <strong>
+                                    <?php
+                                    printf(
+                                        esc_html__('%1$d/%2$d · %3$d%%', 'habit-tracker'),
+                                        $completed_month,
+                                        $target_month,
+                                        $month_percent
+                                    );
+                                    ?>
+                                </strong>
                             </div>
                         </li>
                     <?php endforeach; ?>
