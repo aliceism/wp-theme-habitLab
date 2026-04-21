@@ -12,6 +12,55 @@ $has_active_habits = ! empty($has_active_habits);
 $include_root_wrapper = ! empty($include_root_wrapper);
 $month_svg_points = isset($month_svg_points) ? (string) $month_svg_points : '';
 $category_labels = HabitTracker\Domain\Rules\HabitRules::categoryLabels(true);
+$core_category_keys = HabitTracker\Domain\Rules\HabitRules::categoryKeys(false);
+$core_category_labels = HabitTracker\Domain\Rules\HabitRules::categoryLabels(false);
+$category_stats_map = [];
+
+foreach ($core_category_keys as $core_category_key) {
+    $category_stats_map[$core_category_key] = [
+        'key' => $core_category_key,
+        'label' => (string) ($core_category_labels[$core_category_key] ?? ucfirst($core_category_key)),
+        'active_habits' => 0,
+        'completed_week' => 0,
+        'target_week' => 0,
+        'week_percent' => 0,
+        'completed_month' => 0,
+        'target_month' => 0,
+        'month_percent' => 0,
+        'checked_today' => 0,
+        'today_target' => 0,
+        'today_percent' => 0,
+        'streak_days' => 0,
+        'consistency_percent' => 0,
+    ];
+}
+
+foreach ($category_stats as $category_stat) {
+    $category_key = sanitize_key((string) ($category_stat['key'] ?? ''));
+
+    if (! in_array($category_key, $core_category_keys, true)) {
+        continue;
+    }
+
+    $category_stats_map[$category_key] = array_merge(
+        $category_stats_map[$category_key],
+        [
+            'label' => (string) ($category_stat['label'] ?? $category_stats_map[$category_key]['label']),
+            'active_habits' => (int) ($category_stat['active_habits'] ?? 0),
+            'completed_week' => (int) ($category_stat['completed_week'] ?? 0),
+            'target_week' => (int) ($category_stat['target_week'] ?? 0),
+            'week_percent' => (int) ($category_stat['week_percent'] ?? 0),
+            'completed_month' => (int) ($category_stat['completed_month'] ?? 0),
+            'target_month' => (int) ($category_stat['target_month'] ?? 0),
+            'month_percent' => (int) ($category_stat['month_percent'] ?? 0),
+            'checked_today' => (int) ($category_stat['checked_today'] ?? 0),
+            'today_target' => (int) ($category_stat['today_target'] ?? 0),
+            'today_percent' => (int) ($category_stat['today_percent'] ?? 0),
+            'streak_days' => (int) ($category_stat['streak_days'] ?? 0),
+            'consistency_percent' => (int) ($category_stat['consistency_percent'] ?? 0),
+        ]
+    );
+}
 
 $week_rows = isset($week_chart['rows']) && is_array($week_chart['rows']) ? $week_chart['rows'] : [];
 $week_max_completed = max(1, (int) ($week_chart['max_completed'] ?? 1));
@@ -170,38 +219,28 @@ foreach ($month_rows as $month_row) {
             <p class="app-card__eyebrow"><?php esc_html_e('Category Breakdown', 'habit-tracker'); ?></p>
             <h3><?php esc_html_e('Weekly + Monthly Signals', 'habit-tracker'); ?></h3>
 
-            <?php if (! $has_active_habits) : ?>
-                <p class="habit-tracker-empty-state"><?php esc_html_e('No active habits in your dashboard stack yet.', 'habit-tracker'); ?></p>
-            <?php else : ?>
-                <div class="habit-tracker-progress-list-head" aria-hidden="true">
-                    <span><?php esc_html_e('Category', 'habit-tracker'); ?></span>
-                    <span><?php esc_html_e('Weekly', 'habit-tracker'); ?></span>
-                    <span><?php esc_html_e('Monthly', 'habit-tracker'); ?></span>
-                </div>
+            <p class="habit-tracker-progress-breakdown-intro"><?php esc_html_e('Tap a category to open a modal with full weekly + monthly details.', 'habit-tracker'); ?></p>
 
-                <ul class="habit-tracker-progress-list">
-                    <?php foreach ($category_stats as $stat) : ?>
-                        <?php if ((int) ($stat['active_habits'] ?? 0) <= 0) : ?>
-                            <?php continue; ?>
-                        <?php endif; ?>
-                        <?php
-                        $key = sanitize_key((string) ($stat['key'] ?? HabitTracker\Domain\Rules\HabitRules::CATEGORY_LIFE));
-                        $label = (string) ($stat['label'] ?? '');
-                        $active_habits = (int) ($stat['active_habits'] ?? 0);
-                        $week_percent = (int) ($stat['week_percent'] ?? 0);
-                        $month_percent = (int) ($stat['month_percent'] ?? 0);
-                        $completed_week = (int) ($stat['completed_week'] ?? 0);
-                        $target_week = (int) ($stat['target_week'] ?? 0);
-                        $completed_month = (int) ($stat['completed_month'] ?? 0);
-                        $target_month = (int) ($stat['target_month'] ?? 0);
-                        $checked_today = (int) ($stat['checked_today'] ?? 0);
-                        $today_target = (int) ($stat['today_target'] ?? 0);
-                        $consistency_percent = (int) ($stat['consistency_percent'] ?? 0);
-                        ?>
-                        <li class="habit-tracker-progress-item habit-tracker-progress-item--<?php echo esc_attr($key); ?>">
-                            <div class="habit-tracker-progress-item__head">
-                                <span class="habit-tracker-progress-item__name"><?php echo esc_html($label); ?></span>
-                                <span class="habit-tracker-progress-item__meta">
+            <ul class="habit-tracker-progress-category-grid">
+                <?php foreach ($core_category_keys as $category_key) : ?>
+                    <?php
+                    $category_stat = $category_stats_map[$category_key] ?? [];
+                    $category_label = (string) ($category_stat['label'] ?? ($core_category_labels[$category_key] ?? ucfirst($category_key)));
+                    $active_habits = (int) ($category_stat['active_habits'] ?? 0);
+                    $week_percent = (int) ($category_stat['week_percent'] ?? 0);
+                    $month_percent = (int) ($category_stat['month_percent'] ?? 0);
+                    $modal_id = 'habit-tracker-progress-category-modal-' . $category_key;
+                    ?>
+                    <li class="habit-tracker-progress-category-grid__item">
+                        <button
+                            type="button"
+                            class="habit-tracker-progress-category-trigger habit-tracker-progress-category-trigger--<?php echo esc_attr($category_key); ?>"
+                            data-ht-open-modal="<?php echo esc_attr($modal_id); ?>"
+                            aria-haspopup="dialog"
+                        >
+                            <span class="habit-tracker-progress-category-trigger__head">
+                                <span class="habit-tracker-progress-category-trigger__name"><?php echo esc_html($category_label); ?></span>
+                                <span class="habit-tracker-progress-category-trigger__meta">
                                     <?php
                                     printf(
                                         esc_html(_n('%d habit', '%d habits', $active_habits, 'habit-tracker')),
@@ -209,65 +248,146 @@ foreach ($month_rows as $month_row) {
                                     );
                                     ?>
                                 </span>
-                            </div>
+                            </span>
 
-                            <div class="habit-tracker-progress-item__line habit-tracker-progress-item__line--week">
-                                <span class="habit-tracker-progress-item__line-label"><?php esc_html_e('Week', 'habit-tracker'); ?></span>
-                                <span class="habit-tracker-progress-bar">
-                                    <span style="width: <?php echo esc_attr((string) $week_percent); ?>%;"></span>
+                            <span class="habit-tracker-progress-category-trigger__signals">
+                                <span class="habit-tracker-progress-category-trigger__signal">
+                                    <small><?php esc_html_e('Week', 'habit-tracker'); ?></small>
+                                    <strong><?php echo esc_html((string) $week_percent); ?>%</strong>
                                 </span>
-                                <strong>
-                                    <?php
-                                    printf(
-                                        esc_html__('%1$d/%2$d · %3$d%%', 'habit-tracker'),
-                                        $completed_week,
-                                        $target_week,
-                                        $week_percent
-                                    );
-                                    ?>
-                                </strong>
-                            </div>
+                                <span class="habit-tracker-progress-category-trigger__signal">
+                                    <small><?php esc_html_e('Month', 'habit-tracker'); ?></small>
+                                    <strong><?php echo esc_html((string) $month_percent); ?>%</strong>
+                                </span>
+                            </span>
+                        </button>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
 
-                            <div class="habit-tracker-progress-item__line habit-tracker-progress-item__line--month">
-                                <span class="habit-tracker-progress-item__line-label"><?php esc_html_e('Month', 'habit-tracker'); ?></span>
-                                <span class="habit-tracker-progress-bar">
-                                    <span style="width: <?php echo esc_attr((string) $month_percent); ?>%;"></span>
-                                </span>
-                                <strong>
-                                    <?php
-                                    printf(
-                                        esc_html__('%1$d/%2$d · %3$d%%', 'habit-tracker'),
-                                        $completed_month,
-                                        $target_month,
-                                        $month_percent
-                                    );
-                                    ?>
-                                </strong>
-                            </div>
+            <?php foreach ($core_category_keys as $category_key) : ?>
+                <?php
+                $category_stat = $category_stats_map[$category_key] ?? [];
+                $category_label = (string) ($category_stat['label'] ?? ($core_category_labels[$category_key] ?? ucfirst($category_key)));
+                $active_habits = (int) ($category_stat['active_habits'] ?? 0);
+                $completed_week = (int) ($category_stat['completed_week'] ?? 0);
+                $target_week = (int) ($category_stat['target_week'] ?? 0);
+                $week_percent = (int) ($category_stat['week_percent'] ?? 0);
+                $completed_month = (int) ($category_stat['completed_month'] ?? 0);
+                $target_month = (int) ($category_stat['target_month'] ?? 0);
+                $month_percent = (int) ($category_stat['month_percent'] ?? 0);
+                $checked_today = (int) ($category_stat['checked_today'] ?? 0);
+                $today_target = (int) ($category_stat['today_target'] ?? 0);
+                $today_percent = (int) ($category_stat['today_percent'] ?? 0);
+                $consistency_percent = (int) ($category_stat['consistency_percent'] ?? 0);
+                $streak_days = (int) ($category_stat['streak_days'] ?? 0);
+                $modal_id = 'habit-tracker-progress-category-modal-' . $category_key;
+                $modal_title_id = $modal_id . '-title';
+                ?>
+                <div class="habit-tracker-modal" data-ht-modal="<?php echo esc_attr($modal_id); ?>" hidden>
+                    <div class="habit-tracker-modal__backdrop" data-ht-close-modal></div>
+                    <div
+                        class="habit-tracker-modal__panel habit-tracker-modal__panel--<?php echo esc_attr($category_key); ?> habit-tracker-progress-category-modal__panel"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="<?php echo esc_attr($modal_title_id); ?>"
+                    >
+                        <div class="habit-tracker-modal__header">
+                            <h4 id="<?php echo esc_attr($modal_title_id); ?>"><?php echo esc_html(sprintf(__('%s Signals', 'habit-tracker'), $category_label)); ?></h4>
+                            <button type="button" class="habit-tracker-modal__close" data-ht-close-modal aria-label="<?php esc_attr_e('Close', 'habit-tracker'); ?>">
+                                &times;
+                            </button>
+                        </div>
 
-                            <div class="habit-tracker-progress-item__foot">
-                                <span class="habit-tracker-progress-item__chip">
-                                    <?php
-                                    printf(
-                                        esc_html__('Today: %1$d/%2$d', 'habit-tracker'),
-                                        $checked_today,
-                                        $today_target
-                                    );
-                                    ?>
-                                </span>
-                                <span class="habit-tracker-progress-item__chip">
-                                    <?php
-                                    printf(
-                                        esc_html__('Consistency: %d%%', 'habit-tracker'),
-                                        $consistency_percent
-                                    );
-                                    ?>
-                                </span>
-                            </div>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            <?php endif; ?>
+                        <?php if ($active_habits <= 0) : ?>
+                            <p class="habit-tracker-progress-category-modal__empty">
+                                <?php
+                                printf(
+                                    esc_html__('No active habits in %s yet. Add habits to this category to unlock weekly and monthly analytics.', 'habit-tracker'),
+                                    esc_html($category_label)
+                                );
+                                ?>
+                            </p>
+                        <?php else : ?>
+                            <ul class="habit-tracker-modal-list habit-tracker-progress-category-modal__list">
+                                <li class="habit-tracker-modal-list__item">
+                                    <div class="habit-tracker-modal-list__content">
+                                        <h4><?php esc_html_e('Weekly Progress', 'habit-tracker'); ?></h4>
+                                        <p>
+                                            <?php
+                                            printf(
+                                                esc_html__('%1$d/%2$d completions in the current week.', 'habit-tracker'),
+                                                $completed_week,
+                                                $target_week
+                                            );
+                                            ?>
+                                        </p>
+                                    </div>
+                                    <div class="habit-tracker-modal-list__action">
+                                        <strong class="habit-tracker-progress-category-modal__value"><?php echo esc_html((string) $week_percent); ?>%</strong>
+                                    </div>
+                                </li>
+
+                                <li class="habit-tracker-modal-list__item">
+                                    <div class="habit-tracker-modal-list__content">
+                                        <h4><?php esc_html_e('Monthly Progress', 'habit-tracker'); ?></h4>
+                                        <p>
+                                            <?php
+                                            printf(
+                                                esc_html__('%1$d/%2$d completions this month.', 'habit-tracker'),
+                                                $completed_month,
+                                                $target_month
+                                            );
+                                            ?>
+                                        </p>
+                                    </div>
+                                    <div class="habit-tracker-modal-list__action">
+                                        <strong class="habit-tracker-progress-category-modal__value"><?php echo esc_html((string) $month_percent); ?>%</strong>
+                                    </div>
+                                </li>
+
+                                <li class="habit-tracker-modal-list__item">
+                                    <div class="habit-tracker-modal-list__content">
+                                        <h4><?php esc_html_e('Today', 'habit-tracker'); ?></h4>
+                                        <p>
+                                            <?php
+                                            printf(
+                                                esc_html__('%1$d/%2$d completed today.', 'habit-tracker'),
+                                                $checked_today,
+                                                $today_target
+                                            );
+                                            ?>
+                                        </p>
+                                    </div>
+                                    <div class="habit-tracker-modal-list__action">
+                                        <strong class="habit-tracker-progress-category-modal__value"><?php echo esc_html((string) $today_percent); ?>%</strong>
+                                    </div>
+                                </li>
+
+                                <li class="habit-tracker-modal-list__item">
+                                    <div class="habit-tracker-modal-list__content">
+                                        <h4><?php esc_html_e('Consistency', 'habit-tracker'); ?></h4>
+                                        <p><?php esc_html_e('Category consistency across active days in the month.', 'habit-tracker'); ?></p>
+                                    </div>
+                                    <div class="habit-tracker-modal-list__action">
+                                        <strong class="habit-tracker-progress-category-modal__value"><?php echo esc_html((string) $consistency_percent); ?>%</strong>
+                                    </div>
+                                </li>
+
+                                <li class="habit-tracker-modal-list__item">
+                                    <div class="habit-tracker-modal-list__content">
+                                        <h4><?php esc_html_e('Active Streak', 'habit-tracker'); ?></h4>
+                                        <p><?php esc_html_e('Current streak for this category.', 'habit-tracker'); ?></p>
+                                    </div>
+                                    <div class="habit-tracker-modal-list__action">
+                                        <strong class="habit-tracker-progress-category-modal__value"><?php echo esc_html((string) $streak_days); ?>d</strong>
+                                    </div>
+                                </li>
+                            </ul>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </article>
 
         <div class="app-grid habit-tracker-progress-insights-grid">
