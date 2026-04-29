@@ -3227,6 +3227,35 @@ body.page-template-page-profile-php #habitlab-profile-modal-details-title .habit
     line-height: 1.55;
 }
 
+.habit-tracker-stack-modal__form {
+    margin-top: 0.95rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.habit-tracker-stack-modal__form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+}
+
+.habit-tracker-stack-modal__form-actions {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.72rem;
+}
+
+.habit-tracker-stack-modal__form-actions .habit-tracker-field {
+    flex: 1 1 auto;
+}
+
+.habit-tracker-stack-modal__save {
+    min-height: 46px;
+    margin: 0 !important;
+    white-space: nowrap;
+    align-self: flex-end;
+}
+
 .habit-tracker-modal-list {
     margin: 0;
     padding: 0;
@@ -3356,6 +3385,19 @@ body.page-template-page-profile-php #habitlab-profile-modal-details-title .habit
 }
 
 @media (max-width: 640px) {
+    .habit-tracker-stack-modal__form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .habit-tracker-stack-modal__form-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .habit-tracker-stack-modal__save {
+        width: 100%;
+    }
+
     .habit-tracker-inline-form--add {
         gap: 0.34rem;
         grid-template-columns: minmax(0, 1fr) 38px;
