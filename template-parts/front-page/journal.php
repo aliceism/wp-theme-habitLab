@@ -6,6 +6,9 @@ if (! defined('ABSPATH')) {
 $habitlab_blog_url = function_exists('habitlab_get_blog_url')
     ? habitlab_get_blog_url()
     : home_url('/');
+$habitlab_join_url = function_exists('habitlab_get_page_url_by_slug')
+    ? habitlab_get_page_url_by_slug('join')
+    : wp_login_url();
 
 $habitlab_topic_slugs = ['habits', 'discipline', 'motivation', 'mindset', 'productivity', 'health'];
 $habitlab_topic_categories = [];
@@ -91,31 +94,6 @@ if ($habitlab_guide_posts === []) {
     wp_reset_postdata();
 }
 
-$habitlab_read_time = static function (int $habitlab_post_id): int {
-    $habitlab_content = wp_strip_all_tags((string) get_post_field('post_content', $habitlab_post_id));
-    $habitlab_content = trim($habitlab_content);
-
-    if ($habitlab_content === '') {
-        return 1;
-    }
-
-    $habitlab_tokens = preg_split('/\s+/', $habitlab_content);
-    $habitlab_word_count = is_array($habitlab_tokens)
-        ? count(array_filter($habitlab_tokens, 'strlen'))
-        : 0;
-
-    return max(1, (int) ceil($habitlab_word_count / 200));
-};
-
-$habitlab_primary_category_label = static function (int $habitlab_post_id): string {
-    $habitlab_categories = get_the_category($habitlab_post_id);
-
-    if (is_array($habitlab_categories) && isset($habitlab_categories[0]) && $habitlab_categories[0] instanceof WP_Term) {
-        return (string) $habitlab_categories[0]->name;
-    }
-
-    return __('Article', 'habitlab');
-};
 ?>
 <section id="journal-home" class="journal-home section" aria-labelledby="journal-home-title">
     <div class="container journal-home__inner">
@@ -144,7 +122,9 @@ $habitlab_primary_category_label = static function (int $habitlab_post_id): stri
     $habitlab_featured_id = (int) $habitlab_featured_post->ID;
     $habitlab_featured_permalink = get_permalink($habitlab_featured_id);
     $habitlab_featured_excerpt = get_the_excerpt($habitlab_featured_id);
-    $habitlab_featured_read_time = $habitlab_read_time($habitlab_featured_id);
+    $habitlab_featured_read_time = function_exists('habitlab_get_post_read_time')
+        ? habitlab_get_post_read_time($habitlab_featured_id)
+        : 1;
     ?>
     <section class="journal-featured section" aria-labelledby="journal-featured-title">
         <div class="container">
@@ -156,14 +136,23 @@ $habitlab_primary_category_label = static function (int $habitlab_post_id): stri
             <article class="journal-featured__card card card--hover">
                 <a class="journal-featured__media" href="<?php echo esc_url((string) $habitlab_featured_permalink); ?>">
                     <?php if (has_post_thumbnail($habitlab_featured_id)) : ?>
-                        <?php echo get_the_post_thumbnail($habitlab_featured_id, 'large', ['loading' => 'lazy']); ?>
+                        <?php
+                        echo get_the_post_thumbnail(
+                            $habitlab_featured_id,
+                            'habitlab-article-featured',
+                            [
+                                'loading' => 'lazy',
+                                'decoding' => 'async',
+                            ]
+                        );
+                        ?>
                     <?php else : ?>
                         <span class="journal-thumb-fallback"><?php esc_html_e('Featured Article', 'habitlab'); ?></span>
                     <?php endif; ?>
                 </a>
                 <div class="journal-featured__content">
                     <p class="journal-featured__meta">
-                        <span><?php echo esc_html($habitlab_primary_category_label($habitlab_featured_id)); ?></span>
+                        <span><?php echo esc_html(function_exists('habitlab_get_primary_category_label') ? habitlab_get_primary_category_label($habitlab_featured_id) : __('Article', 'habitlab')); ?></span>
                         <span>&middot;</span>
                         <span><?php echo esc_html(sprintf(__('%d min read', 'habitlab'), $habitlab_featured_read_time)); ?></span>
                         <span>&middot;</span>
@@ -239,16 +228,25 @@ $habitlab_primary_category_label = static function (int $habitlab_post_id): stri
                     <article class="journal-post-card card card--hover">
                         <a class="journal-post-card__media" href="<?php echo esc_url((string) $habitlab_permalink); ?>">
                             <?php if (has_post_thumbnail($habitlab_post_id)) : ?>
-                                <?php echo get_the_post_thumbnail($habitlab_post_id, 'medium_large', ['loading' => 'lazy']); ?>
+                                <?php
+                                echo get_the_post_thumbnail(
+                                    $habitlab_post_id,
+                                    'habitlab-article-card',
+                                    [
+                                        'loading' => 'lazy',
+                                        'decoding' => 'async',
+                                    ]
+                                );
+                                ?>
                             <?php else : ?>
                                 <span class="journal-thumb-fallback"><?php esc_html_e('HabitLab', 'habitlab'); ?></span>
                             <?php endif; ?>
                         </a>
                         <div class="journal-post-card__body">
                             <p class="journal-post-card__meta">
-                                <span><?php echo esc_html($habitlab_primary_category_label($habitlab_post_id)); ?></span>
+                                <span><?php echo esc_html(function_exists('habitlab_get_primary_category_label') ? habitlab_get_primary_category_label($habitlab_post_id) : __('Article', 'habitlab')); ?></span>
                                 <span>&middot;</span>
-                                <span><?php echo esc_html(sprintf(__('%d min read', 'habitlab'), $habitlab_read_time($habitlab_post_id))); ?></span>
+                                <span><?php echo esc_html(sprintf(__('%d min read', 'habitlab'), function_exists('habitlab_get_post_read_time') ? habitlab_get_post_read_time($habitlab_post_id) : 1)); ?></span>
                             </p>
                             <h3><a href="<?php echo esc_url((string) $habitlab_permalink); ?>"><?php echo esc_html(get_the_title($habitlab_post_id)); ?></a></h3>
                             <p><?php echo esc_html(wp_trim_words((string) get_the_excerpt($habitlab_post_id), 20)); ?></p>
@@ -281,7 +279,7 @@ $habitlab_primary_category_label = static function (int $habitlab_post_id): stri
                     $habitlab_permalink = get_permalink($habitlab_post_id);
                     ?>
                     <article class="journal-guide-card card card--hover">
-                        <p class="journal-guide-card__meta"><?php echo esc_html($habitlab_primary_category_label($habitlab_post_id)); ?></p>
+                        <p class="journal-guide-card__meta"><?php echo esc_html(function_exists('habitlab_get_primary_category_label') ? habitlab_get_primary_category_label($habitlab_post_id) : __('Article', 'habitlab')); ?></p>
                         <h3><a href="<?php echo esc_url((string) $habitlab_permalink); ?>"><?php echo esc_html(get_the_title($habitlab_post_id)); ?></a></h3>
                         <p><?php echo esc_html(wp_trim_words((string) get_the_excerpt($habitlab_post_id), 18)); ?></p>
                         <a class="journal-guide-card__link" href="<?php echo esc_url((string) $habitlab_permalink); ?>">
@@ -297,10 +295,10 @@ $habitlab_primary_category_label = static function (int $habitlab_post_id): stri
 <section class="journal-cta section" aria-labelledby="journal-cta-title">
     <div class="container">
         <div class="journal-cta__card card">
-            <p class="journal-kicker"><?php esc_html_e('Stay In The Loop', 'habitlab'); ?></p>
-            <h2 id="journal-cta-title"><?php esc_html_e('New Ideas For Building Better Habits Every Week', 'habitlab'); ?></h2>
-            <p><?php esc_html_e('Bookmark this journal and come back weekly for practical articles you can apply immediately.', 'habitlab'); ?></p>
-            <a class="btn btn-primary" href="<?php echo esc_url($habitlab_blog_url); ?>"><?php esc_html_e('Browse All Insights', 'habitlab'); ?></a>
+            <p class="journal-kicker"><?php esc_html_e('Start Your Lab', 'habitlab'); ?></p>
+            <h2 id="journal-cta-title"><?php esc_html_e('Turn Insight Into Daily Practice', 'habitlab'); ?></h2>
+            <p><?php esc_html_e('Join HabitLab to build your stack, track check-ins, and turn these ideas into real momentum.', 'habitlab'); ?></p>
+            <a class="btn btn-primary" href="<?php echo esc_url($habitlab_join_url); ?>"><?php esc_html_e('Join HabitLab', 'habitlab'); ?></a>
         </div>
     </div>
 </section>
