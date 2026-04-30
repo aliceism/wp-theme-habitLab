@@ -1847,7 +1847,7 @@ body.nav-open .site-nav {
 }
 
 .hero::before {
-    top: -18%;
+    top: -10%;
     left: -38%;
     width: 176%;
     height: 92%;
@@ -1860,7 +1860,7 @@ body.nav-open .site-nav {
 }
 
 .hero::after {
-    top: 24%;
+    top: 30%;
     left: -26%;
     width: 160%;
     height: 84%;
@@ -2983,14 +2983,14 @@ body.modal-open {
     }
 
     .hero::before {
-        top: -6%;
+        top: 1%;
         left: -62%;
         width: 226%;
         height: 64%;
     }
 
     .hero::after {
-        top: 34%;
+        top: 40%;
         left: -52%;
         width: 206%;
         height: 60%;
