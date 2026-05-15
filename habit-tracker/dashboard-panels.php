@@ -6,7 +6,8 @@ if (! defined('ABSPATH')) {
 $context = isset($context) && is_array($context) ? $context : [];
 $month_rows = isset($month_rows) && is_array($month_rows) ? $month_rows : [];
 $month_dates = isset($context['month_dates']) && is_array($context['month_dates']) ? $context['month_dates'] : [];
-$month_weeks = isset($context['month_weeks']) && is_array($context['month_weeks']) ? $context['month_weeks'] : [];
+$month_date_count = count($month_dates);
+$checkins_header_label = esc_html__('Check-ins', 'habit-tracker');
 $today = isset($context['today']) ? (string) $context['today'] : '';
 $redirect = isset($context['redirect_url']) ? (string) $context['redirect_url'] : home_url('/');
 $admin_post_url = isset($admin_post_url) && is_string($admin_post_url) && $admin_post_url !== ''
@@ -32,11 +33,9 @@ $side_html = isset($side_html) ? (string) $side_html : '';
                     <thead>
                         <tr class="habit-tracker-month-table__weeks">
                             <th class="habit-tracker-month-table__habit-col"><?php esc_html_e('Habits', 'habit-tracker'); ?></th>
-                            <?php foreach ($month_weeks as $week) : ?>
-                                <th colspan="<?php echo esc_attr((string) (int) ($week['count'] ?? 0)); ?>">
-                                    <?php echo esc_html((string) ($week['label'] ?? '')); ?>
-                                </th>
-                            <?php endforeach; ?>
+                            <th colspan="<?php echo esc_attr((string) $month_date_count); ?>">
+                                <?php echo esc_html($checkins_header_label); ?>
+                            </th>
                             <th class="habit-tracker-month-table__progress-col"><?php esc_html_e('Progress', 'habit-tracker'); ?></th>
                         </tr>
                         <tr class="habit-tracker-month-table__days">
