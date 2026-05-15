@@ -401,21 +401,12 @@ foreach ($month_rows as $month_row) {
                     <ul class="app-list habit-tracker-progress-insights habit-tracker-progress-insights--category">
                         <li class="habit-tracker-progress-insight-item">
                             <?php
-                            printf(
-                                esc_html__('Monthly completion: %1$d/%2$d (%3$d%%)', 'habit-tracker'),
-                                (int) ($summary['total_completed_month'] ?? 0),
-                                (int) ($summary['total_target_month'] ?? 0),
-                                (int) ($summary['total_percent'] ?? 0)
-                            );
-                            ?>
-                        </li>
-                        <li class="habit-tracker-progress-insight-item">
-                            <?php
                             if (is_array($summary['best_category'] ?? null)) {
                                 printf(
-                                    esc_html__('Best category: %1$s (%2$d%%)', 'habit-tracker'),
+                                    esc_html__('Best category: %1$s (M %2$d%% · W %3$d%%)', 'habit-tracker'),
                                     esc_html((string) ($summary['best_category']['label'] ?? '')),
-                                    (int) ($summary['best_category']['month_percent'] ?? 0)
+                                    (int) ($summary['best_category']['month_percent'] ?? 0),
+                                    (int) ($summary['best_category']['week_percent'] ?? 0)
                                 );
                             } else {
                                 esc_html_e('Best category: not enough data yet.', 'habit-tracker');
@@ -426,9 +417,10 @@ foreach ($month_rows as $month_row) {
                             <?php
                             if (is_array($summary['focus_category'] ?? null)) {
                                 printf(
-                                    esc_html__('Focus category: %1$s (%2$d%%)', 'habit-tracker'),
+                                    esc_html__('Focus category: %1$s (M %2$d%% · W %3$d%%)', 'habit-tracker'),
                                     esc_html((string) ($summary['focus_category']['label'] ?? '')),
-                                    (int) ($summary['focus_category']['month_percent'] ?? 0)
+                                    (int) ($summary['focus_category']['month_percent'] ?? 0),
+                                    (int) ($summary['focus_category']['week_percent'] ?? 0)
                                 );
                             } else {
                                 esc_html_e('Focus category: not enough data yet.', 'habit-tracker');
@@ -437,14 +429,14 @@ foreach ($month_rows as $month_row) {
                         </li>
                         <li class="habit-tracker-progress-insight-item">
                             <?php
-                            if (is_array($summary['longest_streak_category'] ?? null)) {
+                            if (is_array($summary['weekly_leader_category'] ?? null)) {
                                 printf(
-                                    esc_html__('Longest category streak: %1$s (%2$d days)', 'habit-tracker'),
-                                    esc_html((string) ($summary['longest_streak_category']['label'] ?? '')),
-                                    (int) ($summary['longest_streak_category']['streak_days'] ?? 0)
+                                    esc_html__('Weekly leader: %1$s (W %2$d%%)', 'habit-tracker'),
+                                    esc_html((string) ($summary['weekly_leader_category']['label'] ?? '')),
+                                    (int) ($summary['weekly_leader_category']['week_percent'] ?? 0)
                                 );
                             } else {
-                                esc_html_e('Longest category streak: no active streak yet.', 'habit-tracker');
+                                esc_html_e('Weekly leader: not enough data yet.', 'habit-tracker');
                             }
                             ?>
                         </li>
