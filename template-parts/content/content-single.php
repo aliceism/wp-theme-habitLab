@@ -85,7 +85,7 @@ $habitlab_related_query = new WP_Query($habitlab_related_args);
     <?php if ($habitlab_related_query->have_posts()) : ?>
         <section class="article-single__related" aria-labelledby="related-articles-title">
             <header class="article-single__related-head">
-                <p class="journal-kicker"><?php esc_html_e('Related', 'habitlab'); ?></p>
+                <p class="insights-kicker"><?php esc_html_e('Related', 'habitlab'); ?></p>
                 <h2 id="related-articles-title"><?php esc_html_e('Read Next', 'habitlab'); ?></h2>
             </header>
             <div class="content-grid">
