@@ -4,6 +4,6 @@ if (! defined('ABSPATH')) {
 }
 
 get_header();
-get_template_part('template-parts/front-page/journal');
+get_template_part('template-parts/front-page/insights');
 get_footer();
 

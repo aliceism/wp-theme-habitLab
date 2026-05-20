@@ -11,7 +11,7 @@ $habitlab_home_url = habitlab_get_home_target_url();
 $habitlab_insights_url = habitlab_get_page_url_by_slug('insights');
 $habitlab_login_url = habitlab_get_page_url_by_slug('login');
 $habitlab_join_url = habitlab_get_page_url_by_slug('join');
-$habitlab_is_insights_page = is_page('insights') || is_page('journal');
+$habitlab_is_insights_page = is_page('insights');
 $habitlab_is_login_page = is_page('login');
 $habitlab_is_join_page = is_page('join');
 
@@ -45,7 +45,7 @@ $habitlab_app_links = [
     [
         'label'  => __('Insights', 'habitlab'),
         'url'    => habitlab_get_page_url_by_slug('insights'),
-        'active' => is_page('insights') || is_page('journal'),
+        'active' => is_page('insights'),
     ],
     [
         'label'  => __('Habits', 'habitlab'),
