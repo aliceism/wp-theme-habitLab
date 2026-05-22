@@ -9,6 +9,7 @@ $habitlab_blog_url = function_exists('habitlab_get_blog_url')
 $habitlab_join_url = function_exists('habitlab_get_page_url_by_slug')
     ? habitlab_get_page_url_by_slug('join')
     : wp_login_url();
+$habitlab_show_cta = ! is_user_logged_in();
 
 $habitlab_topic_slugs = ['habits', 'discipline', 'motivation', 'mindset', 'productivity', 'health'];
 $habitlab_topic_categories = [];
@@ -292,13 +293,15 @@ if ($habitlab_guide_posts === []) {
     </section>
 <?php endif; ?>
 
-<section class="insights-cta section" aria-labelledby="insights-cta-title">
-    <div class="container">
-        <div class="insights-cta__card card">
-            <p class="insights-kicker"><?php esc_html_e('Start Your Lab', 'habitlab'); ?></p>
-            <h2 id="insights-cta-title"><?php esc_html_e('Turn Insight Into Daily Practice', 'habitlab'); ?></h2>
-            <p><?php esc_html_e('Join HabitLab to build your stack, track check-ins, and turn these ideas into real momentum.', 'habitlab'); ?></p>
-            <a class="btn btn-primary" href="<?php echo esc_url($habitlab_join_url); ?>"><?php esc_html_e('Join HabitLab', 'habitlab'); ?></a>
+<?php if ($habitlab_show_cta) : ?>
+    <section class="insights-cta section" aria-labelledby="insights-cta-title">
+        <div class="container">
+            <div class="insights-cta__card card">
+                <p class="insights-kicker"><?php esc_html_e('Start Your Lab', 'habitlab'); ?></p>
+                <h2 id="insights-cta-title"><?php esc_html_e('Turn Insight Into Daily Practice', 'habitlab'); ?></h2>
+                <p><?php esc_html_e('Join HabitLab to build your stack, track check-ins, and turn these ideas into real momentum.', 'habitlab'); ?></p>
+                <a class="btn btn-primary" href="<?php echo esc_url($habitlab_join_url); ?>"><?php esc_html_e('Join HabitLab', 'habitlab'); ?></a>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+<?php endif; ?>
