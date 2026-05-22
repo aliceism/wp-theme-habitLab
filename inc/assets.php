@@ -107,7 +107,6 @@ function habitlab_enqueue_assets(): void
         ? (string) filemtime($habit_tracker_style_path)
         : $theme_version;
 
-    // Reuse plugin frontend handle so the theme stylesheet takes precedence safely.
     wp_enqueue_style(
         'habit-tracker-frontend',
         get_template_directory_uri() . '/assets/css/habit-tracker.css',
