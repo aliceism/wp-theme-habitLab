@@ -3539,6 +3539,11 @@ body.habit-tracker-modal-open {
         text-align: center;
     }
 
+    .habit-tracker-dashboard-metrics,
+    .app-section.app-metrics-grid.habit-tracker-dashboard-metrics {
+        grid-template-columns: 1fr !important;
+    }
+
     .habit-tracker-progress-metrics {
         grid-template-columns: 1fr;
     }
