@@ -57,7 +57,11 @@ function initNavigation(body) {
     overlay.addEventListener('click', closeMenu);
 
     document.addEventListener('keydown', function (event) {
-        if (body.classList.contains('modal-open') || event.key !== 'Escape') {
+        if (
+            body.classList.contains('modal-open') ||
+            body.classList.contains('habit-tracker-modal-open') ||
+            event.key !== 'Escape'
+        ) {
             return;
         }
 
@@ -115,8 +119,8 @@ function initNavigation(body) {
 }
 
 function initSystemModal(body) {
-    var modals = Array.prototype.slice.call(document.querySelectorAll('[data-modal]'));
-    var openTriggers = Array.prototype.slice.call(document.querySelectorAll('[data-modal-open]'));
+    var modals = Array.prototype.slice.call(document.querySelectorAll('[data-system-modal]'));
+    var openTriggers = Array.prototype.slice.call(document.querySelectorAll('[data-system-modal-open]'));
     var activeModal = null;
     var activeDialog = null;
     var activeTrigger = null;
@@ -228,7 +232,7 @@ function initSystemModal(body) {
     }
 
     openTriggers.forEach(function (trigger) {
-        var targetModalId = trigger.getAttribute('data-modal-open');
+        var targetModalId = trigger.getAttribute('data-system-modal-open');
 
         trigger.setAttribute('aria-expanded', 'false');
 
@@ -250,7 +254,7 @@ function initSystemModal(body) {
     });
 
     modals.forEach(function (modal) {
-        Array.prototype.forEach.call(modal.querySelectorAll('[data-modal-close]'), function (trigger) {
+        Array.prototype.forEach.call(modal.querySelectorAll('[data-system-modal-close]'), function (trigger) {
             trigger.addEventListener('click', closeModal);
         });
     });

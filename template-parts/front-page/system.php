@@ -90,7 +90,7 @@ $habitlab_system_items = [
                 <?php $habitlab_modal_id = $habitlab_item['slug'] . '-modal'; ?>
                 <button
                     class="card card--hover system-card system-card--trigger system-card--<?php echo esc_attr($habitlab_item['slug']); ?>"
-                    type="button" data-modal-open="<?php echo esc_attr($habitlab_modal_id); ?>" aria-haspopup="dialog"
+                    type="button" data-system-modal-open="<?php echo esc_attr($habitlab_modal_id); ?>" aria-haspopup="dialog"
                     aria-controls="<?php echo esc_attr($habitlab_modal_id); ?>" aria-expanded="false">
                     <h3><?php echo esc_html($habitlab_item['label']); ?></h3>
                     <p><?php echo esc_html($habitlab_item['card_text']); ?></p>
@@ -106,13 +106,13 @@ $habitlab_system_items = [
             $habitlab_section_id = $habitlab_modal_id . '-section';
             ?>
             <div id="<?php echo esc_attr($habitlab_modal_id); ?>"
-                class="system-modal system-modal--<?php echo esc_attr($habitlab_item['slug']); ?>" data-modal role="dialog"
+                class="system-modal system-modal--<?php echo esc_attr($habitlab_item['slug']); ?>" data-system-modal role="dialog"
                 aria-modal="true" aria-labelledby="<?php echo esc_attr($habitlab_title_id); ?>"
                 aria-describedby="<?php echo esc_attr($habitlab_intro_id); ?>" hidden>
-                <div class="system-modal__backdrop" data-modal-close></div>
+                <div class="system-modal__backdrop" data-system-modal-close></div>
 
                 <div class="system-modal__dialog" role="document" tabindex="-1">
-                    <button class="system-modal__close" type="button" data-modal-close
+                    <button class="system-modal__close" type="button" data-system-modal-close
                         aria-label="<?php echo esc_attr(sprintf(__('Close %s modal', 'habitlab'), strtolower($habitlab_item['label']))); ?>">
                         <span aria-hidden="true">&times;</span>
                     </button>
