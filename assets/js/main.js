@@ -122,25 +122,12 @@ function initSystemModal(body) {
     var modals = Array.prototype.slice.call(document.querySelectorAll('[data-system-modal]'));
     var openTriggers = Array.prototype.slice.call(document.querySelectorAll('[data-system-modal-open]'));
     var activeModal = null;
-    var activeDialog = null;
     var activeTrigger = null;
     var closeTimer = null;
     var hoverSuppressionTimer = null;
 
     if (!modals.length || !openTriggers.length) {
         return;
-    }
-
-    function getDialog(modal) {
-        return modal ? modal.querySelector('.system-modal__dialog') : null;
-    }
-
-    function getFocusableElements() {
-        return Array.prototype.slice.call(
-            activeDialog.querySelectorAll(
-                'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
-            )
-        );
     }
 
     function hideModalImmediately(modal) {
@@ -180,7 +167,6 @@ function initSystemModal(body) {
         }
 
         activeModal = modal;
-        activeDialog = getDialog(modal);
         activeTrigger = trigger;
         modal.hidden = false;
         body.classList.add('modal-open');
@@ -188,15 +174,10 @@ function initSystemModal(body) {
 
         window.requestAnimationFrame(function () {
             modal.classList.add('is-open');
-
-            if (activeDialog) {
-                activeDialog.focus();
-            }
         });
     }
 
     function closeModal() {
-        var activeElement;
         var modalToClose;
         var triggerToRestore;
 
@@ -204,23 +185,16 @@ function initSystemModal(body) {
             return;
         }
 
-        activeElement = document.activeElement;
         modalToClose = activeModal;
         triggerToRestore = activeTrigger;
-
-        if (activeElement instanceof HTMLElement && modalToClose.contains(activeElement)) {
-            activeElement.blur();
-        }
 
         modalToClose.classList.remove('is-open');
         body.classList.remove('modal-open');
         activeModal = null;
-        activeDialog = null;
         activeTrigger = null;
 
         if (triggerToRestore) {
             triggerToRestore.setAttribute('aria-expanded', 'false');
-            triggerToRestore.blur();
         }
 
         suppressHoverState();
@@ -260,41 +234,13 @@ function initSystemModal(body) {
     });
 
     document.addEventListener('keydown', function (event) {
-        var focusableElements;
-        var firstElement;
-        var lastElement;
-
-        if (!activeModal || activeModal.hidden || !activeDialog) {
+        if (!activeModal || activeModal.hidden) {
             return;
         }
 
         if (event.key === 'Escape') {
             event.preventDefault();
             closeModal();
-            return;
-        }
-
-        if (event.key !== 'Tab') {
-            return;
-        }
-
-        focusableElements = getFocusableElements();
-
-        if (!focusableElements.length) {
-            event.preventDefault();
-            activeDialog.focus();
-            return;
-        }
-
-        firstElement = focusableElements[0];
-        lastElement = focusableElements[focusableElements.length - 1];
-
-        if (event.shiftKey && document.activeElement === firstElement) {
-            event.preventDefault();
-            lastElement.focus();
-        } else if (!event.shiftKey && document.activeElement === lastElement) {
-            event.preventDefault();
-            firstElement.focus();
         }
     });
 }
