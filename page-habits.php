@@ -29,12 +29,16 @@ get_header();
 
 
         <?php if ($habitlab_has_habits_shortcode): ?>
-            <?php echo do_shortcode('[habit_tracker_habits_notice]'); ?>
+            <?php if (is_user_logged_in()): ?>
+                <?php echo do_shortcode('[habit_tracker_habits_notice]'); ?>
 
-            <div class="app-grid">
-                <?php echo do_shortcode('[habit_tracker_habits_stack]'); ?>
-                <?php echo do_shortcode('[habit_tracker_habits_shared]'); ?>
-            </div>
+                <div class="app-grid">
+                    <?php echo do_shortcode('[habit_tracker_habits_stack]'); ?>
+                    <?php echo do_shortcode('[habit_tracker_habits_shared]'); ?>
+                </div>
+            <?php else: ?>
+                <?php echo do_shortcode('[habit_tracker_habits]'); ?>
+            <?php endif; ?>
         <?php else: ?>
             <article class="card app-card app-card--accent">
                 <p class="app-card__eyebrow"><?php esc_html_e('Habits Integration', 'habitlab'); ?></p>
