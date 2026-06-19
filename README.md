@@ -35,8 +35,6 @@ The theme is designed to present HabitLab as a complete habit-building platform 
 
 ## Screenshots
 
-Screenshots can be added to `docs/screenshots/` when available.
-
 | Area | Placeholder |
 | --- | --- |
 | Landing Page | `docs/screenshots/landing-page.png` |
