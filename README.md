@@ -37,11 +37,9 @@ The theme is designed to present HabitLab as a complete habit-building platform 
 
 | Area | Placeholder |
 | --- | --- |
-| Landing Page | `docs/screenshots/landing-page.png` |
-| Insights Page | `docs/screenshots/insights.png` |
-| Habit App Shell | `docs/screenshots/app-shell.png` |
-| Dashboard | `docs/screenshots/dashboard.png` |
-| Progress | `docs/screenshots/progress.png` |
+| Home Page | `docs/screenshots/home-page.jpg/home-page2.jpg` |
+| Insights Page | `docs/screenshots/insights.jpg` |
+| Modals | `docs/screenshots/modal1.png/modal2.png/modal3.png` |
 
 ## Architecture
 
